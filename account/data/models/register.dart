@@ -4,7 +4,9 @@ class RegisterModel {
   String password = '';
   String passwordConfirm = '';
   String genderType = '';
+  String fullPhoneNumber = '';
   String phoneNumber = '';
+  String countryCode = '';
   dynamic avatar = '';
 
   RegisterModel();
@@ -15,7 +17,7 @@ class RegisterModel {
     passwordConfirm = json['passwordConfirm'];
     fullName = json['name'];
     genderType = json['gender'];
-    phoneNumber = json['phone'];
+    fullPhoneNumber = json['phone'];
     avatar = json['avatar'];
   }
 
@@ -26,7 +28,7 @@ class RegisterModel {
     data['passwordConfirm'] = this.passwordConfirm;
     data['name'] = this.fullName;
     data['gender'] = this.genderType;
-    data['phone'] = this.phoneNumber;
+    data['phone'] = this.fullPhoneNumber;
     data['avatar'] = this.avatar;
     return data;
   }

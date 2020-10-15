@@ -9,7 +9,7 @@ class ProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 8),
       child: ListView.builder(
           itemCount: products.length,
           itemBuilder: (ctx, index) => ChangeNotifierProvider.value(

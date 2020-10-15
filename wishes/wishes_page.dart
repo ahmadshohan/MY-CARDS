@@ -8,16 +8,16 @@ import 'package:provider/provider.dart';
 import 'package:mycarts/provider/products.dart';
 import 'package:mycarts/shared/widgets/products_grid.dart';
 
-class FavoritePage extends StatefulWidget {
+class WishesPage extends StatefulWidget {
   @override
-  _FavoritePageState createState() => _FavoritePageState();
+  _WishesPageState createState() => _WishesPageState();
 }
 
-class _FavoritePageState extends State<FavoritePage> {
+class _WishesPageState extends State<WishesPage> {
   GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<Products>(context).favoritesProducts;
+    final productsData = Provider.of<Products>(context).wishesProducts;
     return Scaffold(
         key: _key,
         appBar: AppBar(
@@ -26,7 +26,7 @@ class _FavoritePageState extends State<FavoritePage> {
             leading: IconButton(
                 icon: Icon(EvaIcons.menu, color: AppColors.white),
                 onPressed: () => _key.currentState.openDrawer()),
-            title: Text('المفضلة', overflow: TextOverflow.ellipsis),
+            title: Text('الأمنيات', overflow: TextOverflow.ellipsis),
             centerTitle: true,
             actions: [
               IconButton(
@@ -46,7 +46,7 @@ class _FavoritePageState extends State<FavoritePage> {
               right: false,
               child: productsData.isEmpty
                   ? Center(
-                      child: Text('لايوجد مفضلة بعد !',
+                      child: Text('لايوجد امنيات بعد !',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 18,

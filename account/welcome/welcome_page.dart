@@ -69,9 +69,10 @@ class _WelcomePageState extends State<WelcomePage> {
               borderRadius: BorderRadius.circular(20),
               child: Carousel(
                   images: [
-                    ExactAssetImage("assets/png/temp_news.png"),
-                    ExactAssetImage("assets/png/temp_news.png"),
-                    ExactAssetImage("assets/png/temp_news.png"),
+                    ExactAssetImage("assets/png/welcome_slider_1.png"),
+                    ExactAssetImage("assets/png/welcome_slider_2.png"),
+                    ExactAssetImage("assets/png/welcome_slider_3.png"),
+                    ExactAssetImage("assets/png/welcome_slider_4.png"),
                   ],
                   // images: _controller.sliderData
                   //     .map((slider) => GestureDetector(

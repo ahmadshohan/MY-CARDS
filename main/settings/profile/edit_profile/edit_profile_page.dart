@@ -30,10 +30,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: AppColors.button,
-            title: Center(
-              child: Text(AppLocalization.profile,
-                  style: TextStyle(color: Colors.white)),
-            )),
+            centerTitle: true,
+            title: Text(AppLocalization.profile,
+                style: TextStyle(color: Colors.white))),
         body: Observer(
             builder: (_) => Stack(
                   children: [

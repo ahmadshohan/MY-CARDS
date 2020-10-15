@@ -6,9 +6,12 @@ class AppRoute {
   static const forgotPasswordRoute = '/forgot';
   static const mainRoute = '/main';
   static const productDetailRoute = '/product-detail';
+  static const allProductsRoute = '/all-products';
+  static const wishesRoute = '/wishes';
+  static const aboutRoute = '/about';
+  static const rateusRoute = '/rateus';
   static const editProfileRoute = '/edit-profile';
   static const profileRoute = '/profile';
-  static const settingsRoute = '/settings';
   static const reversionRoute = '/reversion';
   static const shoppingCartRoute = '/shopping-cart';
   static const ordersRoute = '/orders-page';

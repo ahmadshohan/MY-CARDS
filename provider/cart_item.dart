@@ -5,6 +5,7 @@ class CartItem {
   final oldPrice;
   final currentPrice;
   final isFavorite;
+  final isWish;
   final String image;
   int quantity = 0;
   CartItem(
@@ -15,6 +16,7 @@ class CartItem {
       @required this.currentPrice,
       @required this.oldPrice,
       @required this.isFavorite,
+      @required this.isWish,
       @required this.image,
       @required this.quantity});
 }

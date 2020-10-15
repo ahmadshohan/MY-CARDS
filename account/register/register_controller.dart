@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:country_code_picker/country_code.dart';
 import 'package:mycarts/account/data/account_repository.dart';
 import 'package:mycarts/account/data/models/login.dart';
 import 'package:mycarts/account/data/models/register.dart';
@@ -111,8 +112,15 @@ abstract class _RegisterControllerBase with Store {
     if (model.phoneNumber.isEmpty) return AppLocalization.phoneNumberRequired;
     if (model.phoneNumber.length < 11)
       return AppLocalization.phoneNumberNotValid;
-    else
+    else {
+      model.fullPhoneNumber = model.countryCode + model.phoneNumber;
       return null;
+    }
+  }
+
+  @action
+  onCountryChange(CountryCode countryCode) {
+    model.countryCode = countryCode.toString();
   }
 
   @action

@@ -224,6 +224,17 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
   }
 
   @override
+  dynamic onCountryChange(CountryCode countryCode) {
+    final _$actionInfo = _$_RegisterControllerBaseActionController.startAction(
+        name: '_RegisterControllerBase.onCountryChange');
+    try {
+      return super.onCountryChange(countryCode);
+    } finally {
+      _$_RegisterControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 loading: ${loading},

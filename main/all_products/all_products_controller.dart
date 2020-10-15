@@ -3,11 +3,11 @@ import 'package:mycarts/shared/localization/app_localization.dart';
 import 'package:mycarts/shared/services/preferences_service.dart';
 import 'package:mobx/mobx.dart';
 
-part 'category_controller.g.dart';
+part 'all_products_controller.g.dart';
 
-class CategoryController = _CategoryControllerBase with _$CategoryController;
+class AllProductsController = _AllProductsControllerBase with _$AllProductsController;
 
-abstract class _CategoryControllerBase with Store {
+abstract class _AllProductsControllerBase with Store {
   PreferencesService _preferencesService = PreferencesService();
   AccountRepository _accountRepository = AccountRepository();
 

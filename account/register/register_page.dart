@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:mycarts/account/register/register_controller.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/colors.dart';
 import 'package:mycarts/shared/constant/data_list.dart';
 import 'package:mycarts/shared/widgets/closable.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -158,32 +159,61 @@ class _RegisterPageState extends State<RegisterPage> {
                               borderRadius: new BorderRadius.circular(10),
                             ))),
                     SizedBox(height: 10),
-                    TextFormField(
-                        keyboardType: TextInputType.numberWithOptions(),
-                        textInputAction: TextInputAction.next,
-                        focusNode: _telefonNumberFN,
-                        onChanged: (value) =>
-                            _registerController.model.phoneNumber = value,
-                        validator: (_) =>
-                            _registerController.checkPhoneNumber(),
-                        onFieldSubmitted: (_) =>
-                            FocusScope.of(context).requestFocus(_emailFN),
-                        inputFormatters: [
-                          WhitelistingTextInputFormatter.digitsOnly
-                        ],
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                            labelText: 'رقم الهاتف',
-                            suffixIcon:
-                                Icon(EvaIcons.phone, color: Colors.grey),
-                            fillColor: Colors.white10,
-                            filled: true,
-                            labelStyle: TextStyle(color: AppColors.black),
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 10),
-                            border: OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(10),
-                            ))),
+                    Row(
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Row(children: [
+                              Expanded(
+                                  child: CountryCodePicker(
+                                      initialSelection: 'LY',
+                                      favorite: ['+963', 'SY', '+39', 'FR'],
+                                      onChanged:
+                                          _registerController.onCountryChange,
+                                      showFlag: true,
+                                      showOnlyCountryWhenClosed: false,
+                                      showCountryOnly: false,
+                                      flagWidth: 50,
+                                      textOverflow: TextOverflow.ellipsis,
+                                      hideMainText: true,
+                                      closeIcon: Icon(Icons.close,
+                                          color: Colors.black),
+                                      searchDecoration: InputDecoration(
+                                        hintText: 'ابحث',
+                                      ))),
+                              Icon(Icons.arrow_drop_down, color: Colors.black)
+                            ])),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(
+                              keyboardType: TextInputType.numberWithOptions(),
+                              textInputAction: TextInputAction.next,
+                              focusNode: _telefonNumberFN,
+                              onChanged: (value) =>
+                                  _registerController.model.phoneNumber = value,
+                              validator: (_) =>
+                                  _registerController.checkPhoneNumber(),
+                              onFieldSubmitted: (_) =>
+                                  FocusScope.of(context).requestFocus(_emailFN),
+                              inputFormatters: [
+                                WhitelistingTextInputFormatter.digitsOnly
+                              ],
+                              style: TextStyle(color: AppColors.black),
+                              decoration: InputDecoration(
+                                  labelText: 'رقم الهاتف',
+                                  suffixIcon:
+                                      Icon(EvaIcons.phone, color: Colors.grey),
+                                  fillColor: Colors.white10,
+                                  filled: true,
+                                  labelStyle: TextStyle(color: AppColors.black),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 10),
+                                  border: OutlineInputBorder(
+                                    borderRadius: new BorderRadius.circular(10),
+                                  ))),
+                        ),
+                      ],
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -210,7 +240,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(height: 10),
                     Observer(
                         builder: (_) => TextFormField(
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: AppColors.black),
                             textInputAction: TextInputAction.next,
                             focusNode: _passwordFN,
                             onFieldSubmitted: (_) => FocusScope.of(context)
@@ -224,9 +254,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 labelText: 'كلمة المرور',
                                 fillColor: Colors.white10,
                                 filled: true,
-                                labelStyle: TextStyle(
-                                  color: AppColors.black,
-                                ),
+                                labelStyle: TextStyle(color: AppColors.black),
                                 contentPadding:
                                     EdgeInsets.symmetric(horizontal: 10),
                                 suffixIcon: GestureDetector(
@@ -235,12 +263,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                     child: Icon(_registerController.showPassword
                                         ? EvaIcons.eye
                                         : EvaIcons.eyeOff)),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10))))),
+                                border:
+                                    OutlineInputBorder(borderRadius: BorderRadius.circular(10))))),
                     SizedBox(height: 10),
                     Observer(
                       builder: (_) => TextFormField(
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: AppColors.black),
                           textInputAction: TextInputAction.next,
                           focusNode: _passwordConfirmFN,
                           onChanged: (value) =>

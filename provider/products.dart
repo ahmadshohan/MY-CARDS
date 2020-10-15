@@ -6,6 +6,7 @@ class Product with ChangeNotifier {
   final oldPrice;
   final currentPrice;
   bool isFavorite;
+  bool isWish;
   Product(
       {@required this.id,
       @required this.name,
@@ -16,10 +17,16 @@ class Product with ChangeNotifier {
       @required this.image,
       @required this.oldPrice,
       @required this.currentPrice,
-      this.isFavorite = false});
+      this.isFavorite = false,
+      this.isWish = false});
 
-  void toggleFavoriteStatus() {
+  changeFavoriteStatus() {
     isFavorite = !isFavorite;
+    notifyListeners();
+  }
+
+  changeWishStatus() {
+    isWish = !isWish;
     notifyListeners();
   }
 }
@@ -100,6 +107,10 @@ class Products with ChangeNotifier {
     return _productsList.where((prod) => prod.isFavorite).toList();
   }
 
+  List<Product> get wishesProducts {
+    return _productsList.where((prod) => prod.isWish).toList();
+  }
+
   Product findById(String id) {
     return _productsList.firstWhere((prod) => prod.id == id);
   }
@@ -161,6 +172,7 @@ class Products with ChangeNotifier {
       int currentPrice,
       int oldPrice,
       bool isFavorite,
+      bool isWish,
       String color = 'red',
       String size = 'small',
       int quantity = 1,
@@ -177,6 +189,7 @@ class Products with ChangeNotifier {
               currentPrice: existingCartItem.currentPrice,
               oldPrice: existingCartItem.oldPrice,
               isFavorite: existingCartItem.isFavorite,
+              isWish: existingCartItem.isWish,
               image: existingCartItem.image,
               quantity: existingCartItem.quantity + 1));
     } else {
@@ -189,6 +202,7 @@ class Products with ChangeNotifier {
           oldPrice: oldPrice,
           currentPrice: currentPrice,
           isFavorite: isFavorite,
+          isWish: isWish,
           image: image,
           quantity: quantity,
         );
@@ -197,7 +211,7 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem(String productId) {
+  void removeCartItem(String productId) {
     _cartItems.remove(productId);
     notifyListeners();
   }

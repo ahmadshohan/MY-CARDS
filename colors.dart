@@ -15,6 +15,8 @@ class AppColors {
   static const huaweiBg = const Color(0xffF1F1F1);
 
   static const tabBackGround = const Color(0xff333333);
+  static const drawerHeader = const Color(0xff3080D1);
+  static const drawerBody = const Color(0xff0063C6);
 
   static const navigationBar = const Color(0xff0a1617);
   static const BottomNavigationBar = const Color(0xFF1A1A1A);

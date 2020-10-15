@@ -19,10 +19,9 @@ class _ProfilePageState extends State<ProfilePage> {
         appBar: AppBar(
             elevation: 0,
             backgroundColor: AppColors.button,
-            title: Center(
-              child: Text(AppLocalization.profile,
-                  style: TextStyle(color: Colors.white)),
-            )),
+            centerTitle: true,
+            title: Text(AppLocalization.profile,
+                style: TextStyle(color: Colors.white))),
         body: SafeArea(
             top: true,
             bottom: true,

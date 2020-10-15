@@ -13,112 +13,66 @@ class SingleProductVertical extends StatelessWidget {
     return GestureDetector(
         onTap: () => Navigator.pushNamed(context, AppRoute.productDetailRoute,
             arguments: singleProduct.id),
-        child: Container(
-            child: Card(
-                child: Padding(
-                    padding: const EdgeInsets.all(3),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                              child: Card(
-                                  elevation: 5,
-                                  color: AppColors.cardItemBg,
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: IconButton(
-                                                    icon: Icon(
-                                                        singleProduct.isFavorite
-                                                            ? Icons.favorite
-                                                            : Icons
-                                                                .favorite_border,
-                                                        color: singleProduct
-                                                                .isFavorite
-                                                            ? Colors.red
-                                                            : Colors.black),
-                                                    onPressed: () => singleProduct
-                                                        .toggleFavoriteStatus()),
-                                              ),
-                                              Expanded(
-                                                  child: Row(children: [
-                                                Icon(EvaIcons.star,
-                                                    size: 13,
-                                                    color: Colors.amber),
-                                                Icon(EvaIcons.star,
-                                                    size: 13,
-                                                    color: Colors.amber),
-                                                Icon(EvaIcons.star,
-                                                    size: 13,
-                                                    color: Colors.amber),
-                                                Icon(EvaIcons.star,
-                                                    size: 13,
-                                                    color: Colors.amber),
-                                                Icon(EvaIcons.star,
-                                                    size: 13,
-                                                    color: Colors.amber)
-                                              ]))
-                                            ]),
-                                        Expanded(
-                                            child: Row(children: [
-                                          Expanded(
-                                              child: Image.asset(
-                                            singleProduct.image,
-                                            fit: BoxFit.contain,
-                                          ))
-                                        ]))
-                                      ]))),
-                          Text('حقيبة ظهر'),
-                          Row(children: [
-                            Expanded(
-                                child: Text(
-                                    "${singleProduct.currentPrice.toString()} دع",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: AppColors.button))),
-                            SizedBox(width: 10),
-                            Expanded(
-                                child: Text(
-                                    " ${singleProduct.oldPrice.toString()}دع",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 9,
-                                        decoration:
-                                            TextDecoration.lineThrough)))
-                          ]),
-                          Row(children: [
-                            Expanded(
-                                child: SizedBox(
-                                    height: 30,
-                                    child: RaisedButton(
-                                      child: Text("اشتري الآن",
-                                          style: TextStyle(fontSize: 13)),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5),
-                                      color: AppColors.button,
-                                      textColor: AppColors.white,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      onPressed: () => Navigator.pushNamed(
-                                          context, AppRoute.paymentMethodRoute),
-                                    ))),
-                            SizedBox(width: 20),
-                            Expanded(
-                                child: Text('خصم %8',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.button)))
-                          ])
-                        ])))));
+        child: Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+                    Widget>[
+              Expanded(
+                  child: Row(children: [
+                Expanded(
+                    child: ClipRRect(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20)),
+                        child: Image.asset(singleProduct.image,
+                            fit: BoxFit.cover)))
+              ])),
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  child: Column(children: [
+                    Row(children: [
+                      Text('رصيد المنتج', overflow: TextOverflow.ellipsis),
+                      SizedBox(width: 10),
+                      Text('16', overflow: TextOverflow.ellipsis)
+                    ]),
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Expanded(
+                          flex: 2,
+                          child: Row(mainAxisSize: MainAxisSize.min, children: [
+                            InkWell(
+                                onTap: () {},
+                                child: Icon(Icons.add_shopping_cart)),
+                            InkWell(
+                                onTap: () => singleProduct.changeWishStatus(),
+                                child: Icon(
+                                    singleProduct.isWish
+                                        ? EvaIcons.gift
+                                        : EvaIcons.giftOutline,
+                                    color: singleProduct.isWish
+                                        ? Colors.red
+                                        : Colors.black)),
+                            InkWell(
+                                onTap: () =>
+                                    singleProduct.changeFavoriteStatus(),
+                                child: Icon(
+                                    singleProduct.isFavorite
+                                        ? Icons.star
+                                        : Icons.star_border,
+                                    color: singleProduct.isFavorite
+                                        ? Colors.red
+                                        : Colors.black))
+                          ])),
+                      Expanded(
+                          flex: 1,
+                          child: Text(
+                              "${singleProduct.currentPrice.toString()} دل",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 10, color: AppColors.button)))
+                    ])
+                  ]))
+            ])));
   }
 }

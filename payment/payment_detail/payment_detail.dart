@@ -1,8 +1,6 @@
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/colors.dart';
 import 'package:mycarts/payment/payment_detail/payment_detail_controller.dart';
-import 'package:mycarts/shared/widgets/app_search_bar.dart';
-import 'package:mycarts/shared/constant/payment_method.dart';
 import 'package:mycarts/shared/widgets/closable.dart';
 import 'package:mycarts/shared/widgets/j_outline_button.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
@@ -22,7 +20,18 @@ class _PaymentDetailPageState extends State<PaymentDetailPage> {
   Widget build(BuildContext context) {
     // final paymentMethod = ModalRoute.of(context).settings.arguments as PaymentMethod;
     return Scaffold(
-      appBar: AppSearchBar.buildFullAppBar(context),
+      appBar: AppBar(
+          backgroundColor: AppColors.button,
+          title: Text('الدفع', overflow: TextOverflow.ellipsis),
+          centerTitle: true,
+          actions: [
+            IconButton(
+                icon: Icon(Icons.search, color: AppColors.white),
+                onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.shopping_cart, color: AppColors.white),
+                onPressed: () {}),
+          ]),
       body: Observer(
           builder: (_) => Stack(children: [
                 SafeArea(

@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mycarts/colors.dart';
-import 'package:mycarts/shared/widgets/app_search_bar.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/j_outline_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
@@ -26,7 +25,18 @@ class _PaymentCustomerInformationPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppSearchBar.buildFullAppBar(context),
+      appBar: AppBar(
+          backgroundColor: AppColors.button,
+          title: Text('تم الدفع', overflow: TextOverflow.ellipsis),
+          centerTitle: true,
+          actions: [
+            IconButton(
+                icon: Icon(Icons.search, color: AppColors.white),
+                onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.shopping_cart, color: AppColors.white),
+                onPressed: () {}),
+          ]),
       body: Observer(
           builder: (_) => Stack(children: [
                 SafeArea(

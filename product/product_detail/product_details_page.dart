@@ -40,6 +40,14 @@ class _ProductDetailsState extends State<ProductDetails> {
     }).toList();
 
     return Scaffold(
+        appBar: AppBar(backgroundColor: AppColors.button, actions: [
+          IconButton(
+              icon: Icon(Icons.search, color: AppColors.white),
+              onPressed: () {}),
+          IconButton(
+              icon: Icon(Icons.shopping_cart, color: AppColors.white),
+              onPressed: () {})
+        ]),
         body: Observer(
             builder: (_) => SafeArea(
                 top: true,
@@ -47,17 +55,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                 right: false,
                 left: false,
                 child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(10),
                     child: CustomScrollView(slivers: <Widget>[
                       _sliverProductPhotosBar(loadedProduct),
                       SliverList(
                           delegate: SliverChildListDelegate([
-                        _huaweiTextAvatar(),
                         _buildSingleProductWithoutPicture(loadedProduct),
-                        _buildSizeDropDownButton(),
-                        _buildQuantityDropDownButton(),
-                        _buildProductDetailTabBar(loadedProduct),
-                        _moreProductRelated(productsFilterd)
+                        _moreProductRelated(productsFilterd),
+                        _buildProductPrice(loadedProduct),
                       ]))
                     ])))),
         bottomNavigationBar: _bottomBuyAddButtons(productsData, loadedProduct));
@@ -70,230 +75,136 @@ class _ProductDetailsState extends State<ProductDetails> {
         floating: true,
         automaticallyImplyLeading: false,
         expandedHeight: MediaQuery.of(context).size.height * 0.3,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20))),
         flexibleSpace: FlexibleSpaceBar(
-            background: ClipRRect(
-                borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(20)),
-                child: Card(
-                    color: AppColors.cardItemBg,
-                    child: _buildSliderProductCarousel(loadedProduct)))));
+            background: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                color: AppColors.cardItemBg,
+                child: _buildProductPicture(loadedProduct))));
   }
 
-  _buildSliderProductCarousel(Product loadedProduct) {
+  _buildProductPicture(Product loadedProduct) {
     return GestureDetector(
         onTap: () {},
-        child: Stack(children: [
-          Positioned(
-              top: 0,
-              right: MediaQuery.of(context).size.width * 0.2,
-              left: MediaQuery.of(context).size.width * 0.2,
-              child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.29,
-                  child: Carousel(
-                      images: [
-                        ExactAssetImage(loadedProduct.image),
-                        ExactAssetImage(loadedProduct.image),
-                      ],
-                      dotSize: 4.0,
-                      dotSpacing: 15.0,
-                      dotColor: AppColors.button,
-                      dotPosition: DotPosition.bottomCenter,
-                      indicatorBgPadding: 5.0,
-                      borderRadius: true,
-                      moveIndicatorFromBottom: 180.0,
-                      noRadiusForIndicator: true))),
-          Positioned(
-            right: 0,
-            top: 0,
-            child: IconButton(
-                icon: Icon(EvaIcons.arrowForward),
-                onPressed: () => Navigator.pop(context)),
-          ),
-          Positioned(
-              left: 0,
-              top: 0,
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                IconButton(
-                  icon: Icon(EvaIcons.share),
-                  onPressed: () async {
-                    await FlutterShare.share(
-                      title: loadedProduct.name ?? '',
-                      text: loadedProduct.descreption ?? '',
-                      // linkUrl:
-                      // "https://s3.amazonaws.com/scifri-segments/scifri201711241.mp3"
-                      // linkUrl:
-                      //     'http://api-ahmat.thismusic.com.tr/${songItem?.file}'
-                    );
-                  },
-                ),
-                IconButton(
-                    icon: Icon(
-                        loadedProduct.isFavorite
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: loadedProduct.isFavorite
-                            ? Colors.red
-                            : Colors.black),
-                    onPressed: () {
-                      setState(() {
-                        loadedProduct.toggleFavoriteStatus();
-                      });
-                    })
-              ]))
-        ]));
-  }
-
-  _huaweiTextAvatar() {
-    return Padding(
-        padding: EdgeInsets.symmetric(vertical: 5),
-        child: GestureDetector(
-          onTap: () => Navigator.pushNamed(context, AppRoute.huaweiRoute),
-          child: Row(children: [
-            CircleAvatar(
-                radius: 40,
-                backgroundColor: AppColors.huaweiBg,
-                child: Image.asset('assets/png/Huawei_Logo.png',
-                    width: 120, height: 120)),
-            SizedBox(width: 10),
-            Text('HUAWEI')
-          ]),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.29,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(loadedProduct.image, fit: BoxFit.cover)),
         ));
   }
 
   _buildSingleProductWithoutPicture(Product loadedProduct) {
     return Card(
         shape: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
             borderSide: BorderSide.none),
-        child: Column(children: [
-          Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                    flex: 2,
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('حقيبة ظهر',
-                                        textAlign: TextAlign.right,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xFF3C3C3C))),
-                                    Row(children: [
-                                      Icon(EvaIcons.star, color: Colors.amber),
-                                      Icon(EvaIcons.star, color: Colors.amber),
-                                      Icon(EvaIcons.star, color: Colors.amber),
-                                      Icon(EvaIcons.star, color: Colors.amber),
-                                      Icon(EvaIcons.star, color: Colors.amber)
-                                    ])
-                                  ]),
-                              Row(children: [
-                                Expanded(
-                                    child: Text(
-                                        "${loadedProduct.currentPrice.toString()} دع",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color: AppColors.button))),
-                                Expanded(
-                                    child: Text(
-                                  " ${loadedProduct.oldPrice.toString()}دع",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 9,
-                                      decoration: TextDecoration.lineThrough),
-                                )),
-                                Spacer(),
-                                Expanded(
-                                    flex: 1,
-                                    child: Text('خصم %8',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: AppColors.button)))
-                              ])
-                            ])))
-              ])
-        ]));
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(children: [
+              Text('رصيد البلايستيشن105',
+                  textAlign: TextAlign.right,
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF3C3C3C))),
+              Spacer(),
+              Icon(EvaIcons.star, color: AppColors.button),
+              Icon(EvaIcons.gift, color: AppColors.button)
+            ]),
+            Row(children: [
+              Text('تقييم المشتركين للبطاقة ',
+                  textAlign: TextAlign.right,
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF3C3C3C))),
+              Icon(EvaIcons.star, color: Colors.amber),
+              Icon(EvaIcons.star, color: Colors.amber),
+              Icon(EvaIcons.star, color: Colors.amber),
+              Icon(EvaIcons.star, color: Colors.amber),
+              Icon(EvaIcons.star, color: Colors.amber),
+            ]),
+            SizedBox(height: 10),
+            Text(
+                'اشحن رصيد جوالك في السعودية عبر الانترنت باستخدام بطاقات شحن بلايستيشن المتاحة بالعديد من الفئات المختلفة',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF3C3C3C))),
+            SizedBox(height: 10),
+            Text('لمعرفة لمزيد من التفاصيل عن البطاقة وكيفية استخدامها',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF3C3C3C))),
+            SizedBox(height: 10),
+            Center(
+              child: Text('اضغط هنا',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.button)),
+            ),
+          ]),
+        ));
   }
 
   _moreProductRelated(List<Product> productsFilterd) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('مزيد من المنتجات ذات الصلة',
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontWeight: FontWeight.bold)),
-      Container(
-          height: MediaQuery.of(context).size.height * 0.35,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemCount: productsFilterd.length,
-              itemBuilder: (ctx, index) => Container(
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                  child: ChangeNotifierProvider.value(
-                      value: productsFilterd[index],
-                      child: SingleProductVertical()))))
-    ]);
+    return Container(
+        height: MediaQuery.of(context).size.height * 0.35,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: productsFilterd.length,
+            itemBuilder: (ctx, index) => Container(
+                width: MediaQuery.of(context).size.width * 0.4,
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                child: ChangeNotifierProvider.value(
+                    value: productsFilterd[index],
+                    child: SingleProductVertical()))));
   }
 
-  _buildSizeDropDownButton() {
-    List<DropdownMenuItem<String>> dropDownItems = [];
-    for (String size in sizeList) {
-      var newItem = DropdownMenuItem(
-          child: Text(size, overflow: TextOverflow.ellipsis), value: size);
-      dropDownItems.add(newItem);
-    }
-    return Card(
-        child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: DropdownButton<String>(
-                isExpanded: true,
-                hint: Text('المقاس', style: TextStyle(color: Colors.black)),
-                onChanged: (selectedSize) {
-                  _controller.selectedSize(selectedSize);
-                },
-                value: _controller.size,
-                items: dropDownItems)));
-  }
-
-  _buildQuantityDropDownButton() {
-    List<DropdownMenuItem<int>> dropDownItems = [];
-    for (int quantity in quantityList) {
-      var newItem = DropdownMenuItem(
-          child: Text('$quantity', overflow: TextOverflow.ellipsis),
-          value: quantity);
-      dropDownItems.add(newItem);
-    }
-    return Card(
-      child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: DropdownButton<int>(
-              isExpanded: true,
-              elevation: 7,
-              hint: Text('الكمية'),
-              onChanged: (selectedQuantity) {
-                _controller.selectedQuantity(selectedQuantity);
-              },
-              value: _controller.quantity,
-              items: dropDownItems)),
+  _buildProductPrice(Product loadedProduct) {
+    return Column(
+      textBaseline: TextBaseline.alphabetic,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        RichText(
+            text: TextSpan(
+                style: TextStyle(textBaseline: TextBaseline.alphabetic),
+                children: [
+              TextSpan(
+                  text: 'سعر المنتج الأجمالي',
+                  style: TextStyle(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w500,
+                    textBaseline: TextBaseline.alphabetic,
+                    fontSize: 17,
+                  )),
+              TextSpan(
+                  text: '${27.99}\$',
+                  style: TextStyle(
+                    color: AppColors.button,
+                    textBaseline: TextBaseline.alphabetic,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                  ))
+            ])),
+        Text('ستحصل على 11 نقطة مكافئة عند شراء المنتج',
+            style: TextStyle(
+              color: AppColors.black,
+              fontWeight: FontWeight.w500,
+              textBaseline: TextBaseline.alphabetic,
+              fontSize: 17,
+            ))
+      ],
     );
-  }
-
-  _buildProductDetailTabBar(Product loadedProduct) {
-    return ProductDetailTabsBar(loadedProduct);
   }
 
   _bottomBuyAddButtons(Products productsData, Product loadedProduct) {
@@ -320,6 +231,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         currentPrice: loadedProduct.currentPrice,
                         oldPrice: loadedProduct.oldPrice,
                         isFavorite: loadedProduct.isFavorite,
+                        isWish: loadedProduct.isWish,
                         image: loadedProduct.image,
                         size: _controller.size,
                       );
