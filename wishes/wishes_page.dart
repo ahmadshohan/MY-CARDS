@@ -6,7 +6,7 @@ import 'package:mycarts/shared/widgets/app_drawer.dart';
 import 'package:mycarts/shared/widgets/products_list.dart';
 import 'package:provider/provider.dart';
 import 'package:mycarts/provider/products.dart';
-import 'package:mycarts/shared/widgets/products_grid.dart';
+import 'package:mycarts/app_route.dart';
 
 class WishesPage extends StatefulWidget {
   @override
@@ -34,7 +34,8 @@ class _WishesPageState extends State<WishesPage> {
                   onPressed: () {}),
               IconButton(
                   icon: Icon(Icons.shopping_cart, color: AppColors.white),
-                  onPressed: () {}),
+                  onPressed: () => Navigator.pushReplacementNamed(
+                      context, AppRoute.shoppingCartRoute))
             ]),
         drawer: AppDrawer(),
         body: Container(

@@ -1,28 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_rating/flutter_rating.dart';
 import 'package:mycarts/colors.dart';
 import 'package:mycarts/app_route.dart';
-import 'package:mycarts/rate_us/rateus_controller.dart';
+import 'package:mycarts/message_us/message_us_controller.dart';
 import 'package:mycarts/shared/widgets/closable.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
 
-class RateUsPage extends StatefulWidget {
+class MessageUsPage extends StatefulWidget {
   @override
-  _RateUsPageState createState() => new _RateUsPageState();
+  _MessageUsPageState createState() => new _MessageUsPageState();
 }
 
-class _RateUsPageState extends State<RateUsPage> {
-  RateUsController _controller = RateUsController();
-
+class _MessageUsPageState extends State<MessageUsPage> {
+  MessageUsController _controller = MessageUsController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: AppColors.button,
-          title: Text('التقييم', overflow: TextOverflow.ellipsis),
+          title: Text('راسلنا', overflow: TextOverflow.ellipsis),
           centerTitle: true,
           actions: [
             IconButton(
@@ -45,16 +42,11 @@ class _RateUsPageState extends State<RateUsPage> {
                             padding: EdgeInsets.all(10),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text('ماهو تقييمك لهذا التطبيق',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 19)),
                                   SizedBox(height: 10),
-                                  _buildRatingStars(),
                                   _buildWriteNoteInput(),
-                                  SizedBox(height: 25),
-                                  _buildImage()
+                                  SizedBox(height: 30),
+                                  _buildImage(),
                                 ])))),
                 Visibility(
                     visible: _controller.loading,
@@ -64,27 +56,12 @@ class _RateUsPageState extends State<RateUsPage> {
     );
   }
 
-  _buildRatingStars() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        StarRating(
-            size: 40.0,
-            rating: _controller.rating,
-            color: Colors.orange,
-            borderColor: Colors.grey,
-            starCount: _controller.starCount,
-            onRatingChanged: _controller.updateRating),
-      ],
-    );
-  }
-
   _buildWriteNoteInput() {
     return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('كيف يمكننا جعل هذه التجربة افضل',
+          Text('نسعد بمشاركتنا اي استفسار',
               style: TextStyle(color: Colors.black, fontSize: 19)),
           SizedBox(height: 10),
           TextFormField(
@@ -96,7 +73,7 @@ class _RateUsPageState extends State<RateUsPage> {
               maxLines: 5,
               style: TextStyle(color: AppColors.black),
               decoration: InputDecoration(
-                  hintText: 'كيف يمكننا جعل هذه التجربة افضل',
+                  hintText: 'اكتب شيئ ......',
                   fillColor: Colors.white10,
                   filled: true,
                   labelStyle: TextStyle(color: AppColors.black),
@@ -110,7 +87,7 @@ class _RateUsPageState extends State<RateUsPage> {
   _buildImage() {
     return Center(
       child: Image.asset(
-        'assets/png/rate_us.png',
+        'assets/png/message_us.png',
         fit: BoxFit.cover,
       ),
     );

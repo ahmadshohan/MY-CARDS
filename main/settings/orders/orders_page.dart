@@ -17,10 +17,9 @@ class _OrdersPageState extends State<OrdersPage> {
         appBar: AppBar(
             elevation: 0.1,
             backgroundColor: AppColors.button,
-            title: Center(
-              child: Text('طلباتي',
-                  overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
-            )),
+            centerTitle: true,
+            title: Text('طلباتي',
+                overflow: TextOverflow.ellipsis, textAlign: TextAlign.center)),
         body: orderData.isEmpty
             ? Center(
                 child: Text('لا يوجد طلبات !',

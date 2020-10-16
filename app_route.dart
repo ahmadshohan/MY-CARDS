@@ -10,9 +10,11 @@ class AppRoute {
   static const wishesRoute = '/wishes';
   static const aboutRoute = '/about';
   static const rateusRoute = '/rateus';
+  static const messageusRoute = '/messageus';
   static const editProfileRoute = '/edit-profile';
   static const profileRoute = '/profile';
-  static const reversionRoute = '/reversion';
+  static const complaintsRoute = '/complaints';
+  static const myrewardsRoute = '/myrewards';
   static const shoppingCartRoute = '/shopping-cart';
   static const ordersRoute = '/orders-page';
   static const paymentMethodRoute = '/payment-method';

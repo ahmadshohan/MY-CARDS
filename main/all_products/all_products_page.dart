@@ -1,4 +1,5 @@
 import 'package:mycarts/colors.dart';
+import 'package:mycarts/app_route.dart';
 import 'package:mycarts/main/all_products/all_products_controller.dart';
 import 'package:mycarts/provider/products.dart';
 import 'package:mycarts/shared/widgets/products_grid.dart';
@@ -40,7 +41,8 @@ class _AllProductsPageState extends State<AllProductsPage> {
                   onPressed: () {}),
               IconButton(
                   icon: Icon(Icons.shopping_cart, color: AppColors.white),
-                  onPressed: () {}),
+                  onPressed: () => Navigator.pushReplacementNamed(
+                      context, AppRoute.shoppingCartRoute))
             ]),
         body: Observer(
           builder: (_) => Container(

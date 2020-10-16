@@ -42,7 +42,32 @@ class SingleProductVertical extends StatelessWidget {
                           flex: 2,
                           child: Row(mainAxisSize: MainAxisSize.min, children: [
                             InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  product.addCart(
+                                    productId: singleProduct.id,
+                                    title: singleProduct.name,
+                                    currentPrice: singleProduct.currentPrice,
+                                    oldPrice: singleProduct.oldPrice,
+                                    isFavorite: singleProduct.isFavorite,
+                                    isWish: singleProduct.isWish,
+                                    image: singleProduct.image,
+                                  );
+                                  Scaffold.of(context).hideCurrentSnackBar();
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text(
+                                          'تم اضافة المنتج الى السلة ',
+                                          style: TextStyle(fontSize: 17)),
+                                      duration: Duration(seconds: 3),
+                                      elevation: 3,
+                                      action: SnackBarAction(
+                                        label: 'تراجع',
+                                        onPressed: () {
+                                          product.removeSingleItem(
+                                            singleProduct.id,
+                                          );
+                                        },
+                                      )));
+                                },
                                 child: Icon(Icons.add_shopping_cart)),
                             InkWell(
                                 onTap: () => singleProduct.changeWishStatus(),

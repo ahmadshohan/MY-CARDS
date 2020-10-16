@@ -77,7 +77,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     color: AppColors.white,
                     indent: 10,
                     endIndent: 10),
-                _buildMyAward(),
+                _buildMyRewards(),
                 Divider(
                     height: 0.9,
                     color: AppColors.white,
@@ -182,8 +182,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   _buildMessageUs() {
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => FavoritePage())),
+      onTap: () => Navigator.pushNamed(context, AppRoute.messageusRoute),
       child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(children: <Widget>[
@@ -200,7 +199,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   _buildComplaints() {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, AppRoute.reversionRoute),
+      onTap: () => Navigator.pushNamed(context, AppRoute.complaintsRoute),
       child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(children: <Widget>[
@@ -215,10 +214,9 @@ class _AppDrawerState extends State<AppDrawer> {
     );
   }
 
-  _buildMyAward() {
+  _buildMyRewards() {
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => FavoritePage())),
+      onTap: () => Navigator.pushNamed(context, AppRoute.myrewardsRoute),
       child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(children: <Widget>[

@@ -2,11 +2,11 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mycarts/colors.dart';
+import 'package:mycarts/app_route.dart';
 import 'package:mycarts/shared/widgets/app_drawer.dart';
 import 'package:mycarts/shared/widgets/products_list.dart';
 import 'package:provider/provider.dart';
 import 'package:mycarts/provider/products.dart';
-import 'package:mycarts/shared/widgets/products_grid.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -34,7 +34,8 @@ class _FavoritePageState extends State<FavoritePage> {
                   onPressed: () {}),
               IconButton(
                   icon: Icon(Icons.shopping_cart, color: AppColors.white),
-                  onPressed: () {}),
+                  onPressed: () => Navigator.pushReplacementNamed(
+                      context, AppRoute.shoppingCartRoute))
             ]),
         drawer: AppDrawer(),
         body: Container(

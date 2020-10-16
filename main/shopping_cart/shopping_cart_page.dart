@@ -1,10 +1,10 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:mycarts/shared/widgets/app_drawer.dart';
-import 'package:mycarts/shared/widgets/single_product_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/colors.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:mycarts/shared/widgets/app_drawer.dart';
+import 'package:mycarts/shared/widgets/single_product_cart.dart';
 import 'package:mycarts/main/shopping_cart/shopping_cart_controller.dart';
 import 'package:mycarts/provider/cart_item.dart';
 import 'package:mycarts/provider/products.dart';
@@ -46,9 +46,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             actions: [
               IconButton(
                   icon: Icon(Icons.search, color: AppColors.white),
-                  onPressed: () {}),
-              IconButton(
-                  icon: Icon(Icons.shopping_cart, color: AppColors.white),
                   onPressed: () {}),
             ]),
         drawer: AppDrawer(),
@@ -94,10 +91,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                   cartItems.isEmpty || cart.totalAmount == 0
                       ? Container(
                           alignment: Alignment.bottomRight,
-                          margin: EdgeInsets.only(
-                            right: 18,
-                            bottom: 15,
-                          ),
+                          margin: EdgeInsets.only(right: 18, bottom: 15),
                           child: FloatingActionButton(
                             child: Icon(Icons.add, size: 30),
                             onPressed: () {

@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mycarts/about/about_page.dart';
+import 'package:mycarts/complaints/complaints_page.dart';
 import 'package:mycarts/main/all_products/all_products_page.dart';
+import 'package:mycarts/message_us/message_us_page.dart';
 import 'package:mycarts/rate_us/rate_us_page.dart';
 import 'package:mycarts/wishes/wishes_page.dart';
 import 'package:provider/provider.dart';
 import 'package:mycarts/shared/localization/app_localization.dart';
+import 'package:mycarts/myreward/myreward_page.dart';
 import 'package:mycarts/account/forgot_password/forget_password_page.dart';
 import 'package:mycarts/account/login/login_page.dart';
 import 'package:mycarts/account/register/register_page.dart';
@@ -21,7 +24,6 @@ import 'package:mycarts/payment/payment_customer_information/payment_customer_in
 import 'package:mycarts/payment/payment_detail/payment_detail.dart';
 import 'package:mycarts/payment/payment_method/payment_method_page.dart';
 import 'package:mycarts/provider/orders.dart';
-import 'package:mycarts/reversion/reversion_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mycarts/main/main_navigator.dart';
 import 'package:mycarts/product/product_detail/product_details_page.dart';
@@ -77,7 +79,9 @@ class MyCartsAppState extends State<MyCartsApp> {
               AppRoute.editProfileRoute: (ctx) => EditProfilePage(),
               AppRoute.aboutRoute: (ctx) => AboutPage(),
               AppRoute.rateusRoute: (ctx) => RateUsPage(),
-              AppRoute.reversionRoute: (ctx) => ReversionPage(),
+              AppRoute.messageusRoute: (ctx) => MessageUsPage(),
+              AppRoute.complaintsRoute: (ctx) => ComplaintsPage(),
+              AppRoute.myrewardsRoute: (ctx) => MyRewardsPage(),
               AppRoute.shoppingCartRoute: (ctx) => ShoppingCartPage(),
               AppRoute.ordersRoute: (ctx) => OrdersPage(),
               AppRoute.paymentMethodRoute: (ctx) => PaymentMethodPage(),

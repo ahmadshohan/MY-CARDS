@@ -46,7 +46,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               onPressed: () {}),
           IconButton(
               icon: Icon(Icons.shopping_cart, color: AppColors.white),
-              onPressed: () {})
+              onPressed: () => Navigator.pushReplacementNamed(
+                  context, AppRoute.shoppingCartRoute))
         ]),
         body: Observer(
             builder: (_) => SafeArea(

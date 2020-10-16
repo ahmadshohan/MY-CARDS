@@ -19,7 +19,7 @@ abstract class _PaymentMethodControllerBase with Store {
   }
 
   @observable
-  PaymentMethod selectedPaymentMethod = PaymentMethod.Asya;
+  PaymentMethod selectedPaymentMethod = PaymentMethod.LocalBank;
 
   @observable
   bool loading = false;

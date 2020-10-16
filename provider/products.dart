@@ -111,6 +111,11 @@ class Products with ChangeNotifier {
     return _productsList.where((prod) => prod.isWish).toList();
   }
 
+  // void removeWishProduct(String productId) {
+  //   wishesProducts.remove(productId);
+  //   notifyListeners();
+  // }
+
   Product findById(String id) {
     return _productsList.firstWhere((prod) => prod.id == id);
   }
@@ -228,6 +233,7 @@ class Products with ChangeNotifier {
             currentPrice: existingCart.currentPrice,
             oldPrice: existingCart.oldPrice,
             isFavorite: existingCart.isFavorite,
+            isWish: existingCart.isWish,
             image: existingCart.image,
             quantity: existingCart.quantity - 1);
       });

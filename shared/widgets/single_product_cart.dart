@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:mycarts/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:mycarts/provider/products.dart';
 import 'package:animations/animations.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SingleProductCart extends StatefulWidget {
   final String cartId, productId, title, size, image;
@@ -63,17 +63,16 @@ class _SingleProductCartState extends State<SingleProductCart> {
             margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
             child: Icon(Icons.delete, color: Colors.white, size: 40)),
         child: Card(
-            child: Column(
-          children: [
-            Container(
-                height: 30,
-                width: double.infinity,
-                color: AppColors.button,
-                padding: const EdgeInsets.only(right: 30),
-                child: Text('خصم 5% لأكثر من خمس بطاقات',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: AppColors.white))),
-            Padding(
+            child: Column(children: [
+          Container(
+              height: 30,
+              width: double.infinity,
+              color: AppColors.button,
+              padding: const EdgeInsets.only(right: 30),
+              child: Text('خصم 5% لأكثر من خمس بطاقات',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: AppColors.white))),
+          Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,11 +82,8 @@ class _SingleProductCartState extends State<SingleProductCart> {
                         flex: 1,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              widget.image,
-                              fit: BoxFit.cover,
-                              height: 100,
-                            ))),
+                            child: Image.asset(widget.image,
+                                fit: BoxFit.cover, height: 100))),
                     Expanded(
                         flex: 2,
                         child: Padding(
@@ -113,40 +109,34 @@ class _SingleProductCartState extends State<SingleProductCart> {
                                                 color: AppColors.black))),
                                     SizedBox(width: 10),
                                     Expanded(
-                                      child: Row(
-                                        children: [
-                                          InkWell(
-                                              onTap: () {},
-                                              child: Icon(
-                                                  Icons.add_shopping_cart)),
-                                          Icon(
-                                              widget.isWish
-                                                  ? EvaIcons.gift
-                                                  : EvaIcons.giftOutline,
-                                              color: widget.isWish
-                                                  ? Colors.red
-                                                  : Colors.black),
-                                          InkWell(
-                                              onTap: () async {
-                                                return await _showConfirmDialog(
-                                                    context);
-                                              },
-                                              child: Icon(
-                                                EvaIcons.closeCircle,
-                                                size: 30,
-                                                color: AppColors.button,
-                                              )),
-                                        ],
-                                      ),
-                                    )
-                                  ]),
+                                        child: Row(children: [
+                                      InkWell(
+                                          onTap: () {},
+                                          child: Icon(Icons.add_shopping_cart,
+                                              size: 35)),
+                                      Icon(
+                                          widget.isWish
+                                              ? EvaIcons.gift
+                                              : EvaIcons.giftOutline,
+                                          color: widget.isWish
+                                              ? Colors.red
+                                              : Colors.black,
+                                          size: 35),
+                                      InkWell(
+                                          onTap: () async {
+                                            return await _showConfirmDialog(
+                                                context);
+                                          },
+                                          child: Icon(EvaIcons.closeCircle,
+                                              size: 35,
+                                              color: AppColors.button))
+                                    ]))
+                                  ])
                                 ])))
-                  ]),
-            ),
-            Text(' ستحصل على 11 نقطة مكافئة عند شراء المنتج',
-                style: TextStyle(fontSize: 15, color: AppColors.black))
-          ],
-        )));
+                  ])),
+          Text(' ستحصل على 11 نقطة مكافئة عند شراء المنتج',
+              style: TextStyle(fontSize: 15, color: AppColors.black))
+        ])));
   }
 
   _showConfirmDialog(BuildContext context) async {

@@ -83,7 +83,8 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {}),
                   IconButton(
                       icon: Icon(Icons.shopping_cart, color: AppColors.white),
-                      onPressed: () {}),
+                      onPressed: () => Navigator.pushReplacementNamed(
+                          context, AppRoute.shoppingCartRoute))
                 ])),
             Positioned(
                 top: 50,

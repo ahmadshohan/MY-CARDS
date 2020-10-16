@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:mycarts/data/models/result.dart';
 import 'package:mycarts/main/settings/profile/edit_profile/data/models/profile.dart';
 import 'package:mycarts/main/settings/profile/edit_profile/data/profile_repository.dart';
@@ -7,15 +5,14 @@ import 'package:mycarts/shared/localization/app_localization.dart';
 import 'package:mycarts/shared/services/preferences_service.dart';
 import 'package:mycarts/shared/widgets/toaster.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 
-part 'reversion_controller.g.dart';
+part 'complaints_controller.g.dart';
 
-class ReversionPageController = _ReversionPageControllerBase
-    with _$ReversionPageController;
+class ComplaintsController = _ComplaintsControllerrBase
+    with _$ComplaintsController;
 
-abstract class _ReversionPageControllerBase with Store {
+abstract class _ComplaintsControllerrBase with Store {
   PreferencesService _preferencesService = PreferencesService();
   ProfileRepository _profileRepository = ProfileRepository();
 
@@ -27,16 +24,10 @@ abstract class _ReversionPageControllerBase with Store {
   }
 
   @observable
-  String reversionItem = 'سماعة';
-
-  @observable
   bool loading = false;
 
   @observable
   String lang = AppLocalization.defaultLang;
-
-  @observable
-  File pictureFile;
 
   @observable
   bool autoValidate = false;
@@ -49,11 +40,6 @@ abstract class _ReversionPageControllerBase with Store {
 
   @action
   bool isRtl() => lang == AppLocalization.ar;
-
-  @action
-  void reversionItemChange(String selectedItem) {
-    reversionItem = selectedItem;
-  }
 
   @action
   update() async {

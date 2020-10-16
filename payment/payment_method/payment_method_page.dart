@@ -1,3 +1,4 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -26,7 +27,8 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: AppColors.button,
-          title: Text('الدفع', overflow: TextOverflow.ellipsis),
+          elevation: 0.1,
+          title: Text('طريقة الدفع', overflow: TextOverflow.ellipsis),
           centerTitle: true,
           actions: [
             IconButton(
@@ -34,7 +36,8 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
                 onPressed: () {}),
             IconButton(
                 icon: Icon(Icons.shopping_cart, color: AppColors.white),
-                onPressed: () {}),
+                onPressed: () => Navigator.pushReplacementNamed(
+                    context, AppRoute.shoppingCartRoute))
           ]),
       body: Observer(
           builder: (_) => Stack(children: [
@@ -52,9 +55,9 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
                                   SizedBox(height: 10),
                                   _paymentPlan(),
                                   SizedBox(height: 5),
-                                  _buildAsyaCard(),
-                                  _buildZeinCard(),
-                                  _buildReceivePayCard()
+                                  _buildLocalBank(),
+                                  _buildCash(),
+                                  _buildAdvanceCard()
                                 ])))),
                 Visibility(
                     visible: _controller.loading,
@@ -66,27 +69,10 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
 
   _paymentPlan() {
     return Image.asset('assets/png/payment_method.png',
-            fit: BoxFit.cover, width: double.infinity)
-
-        //   Row(children: [
-        //   Expanded(
-        //       child: Text('أختر طريقة الدفع',
-        //           overflow: TextOverflow.ellipsis,
-        //           style: TextStyle(color: Colors.black, fontSize: 17))),
-        //   Expanded(
-        //       child: Text('تفاصيل الدفع',
-        //           overflow: TextOverflow.ellipsis,
-        //           style: TextStyle(color: Colors.black, fontSize: 17))),
-        //   Expanded(
-        //       child: Text('بيانات المستلم ',
-        //           overflow: TextOverflow.ellipsis,
-        //           style: TextStyle(color: Colors.black, fontSize: 17)))
-        // ])
-
-        ;
+        fit: BoxFit.cover, width: double.infinity);
   }
 
-  _buildAsyaCard() {
+  _buildLocalBank() {
     return Observer(
       builder: (_) => Card(
           elevation: 5,
@@ -96,14 +82,19 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
               child: Theme(
                   data: ThemeData(unselectedWidgetColor: AppColors.black),
                   child: RadioListTile(
-                      value: PaymentMethod.Asya,
+                      value: PaymentMethod.LocalBank,
                       groupValue: _controller.selectedPaymentMethod,
-                      title: Row(children: [
-                        Icon(Icons.satellite, color: AppColors.black),
-                        Text('اسيا حوالة',
+                      title: ListTile(
+                        title: Row(children: [
+                          Icon(Icons.satellite, color: AppColors.black),
+                          Text(' خدمات',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 19))
+                        ]),
+                        subtitle: Text('من خلال احد المصارف المحلية الليبية',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 18))
-                      ]),
+                                fontWeight: FontWeight.w400, fontSize: 15)),
+                      ),
                       activeColor: AppColors.button,
                       onChanged: (newValue) {
                         _controller.setSelectedPaymentMethodType(newValue);
@@ -113,7 +104,7 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
     );
   }
 
-  _buildZeinCard() {
+  _buildCash() {
     return Observer(
       builder: (_) => Card(
           elevation: 5,
@@ -123,14 +114,19 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
               child: Theme(
                   data: ThemeData(unselectedWidgetColor: AppColors.black),
                   child: RadioListTile(
-                      value: PaymentMethod.Zein,
+                      value: PaymentMethod.Cash,
                       groupValue: _controller.selectedPaymentMethod,
-                      title: Row(children: [
-                        Icon(Icons.star, color: AppColors.black),
-                        Text('زين كاش',
+                      title: ListTile(
+                        title: Row(children: [
+                          Icon(EvaIcons.creditCard, color: AppColors.black),
+                          Text(' كاش',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 19))
+                        ]),
+                        subtitle: Text('من خلال احد الموزعين المعتمدين',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 18))
-                      ]),
+                                fontWeight: FontWeight.w400, fontSize: 15)),
+                      ),
                       activeColor: AppColors.button,
                       onChanged: (newValue) {
                         _controller.setSelectedPaymentMethodType(newValue);
@@ -140,7 +136,7 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
     );
   }
 
-  _buildReceivePayCard() {
+  _buildAdvanceCard() {
     return Observer(
       builder: (_) => Card(
           elevation: 5,
@@ -150,14 +146,19 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
               child: Theme(
                   data: ThemeData(unselectedWidgetColor: AppColors.black),
                   child: RadioListTile(
-                      value: PaymentMethod.ReceivePay,
+                      value: PaymentMethod.AdvanceCard,
                       groupValue: _controller.selectedPaymentMethod,
-                      title: Row(children: [
-                        Icon(Icons.monetization_on, color: AppColors.black),
-                        Text('الدفع عند الأستلام',
+                      title: ListTile(
+                        title: Row(children: [
+                          Icon(Icons.credit_card, color: AppColors.black),
+                          Text(' بطاقة مسبقة',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 19))
+                        ]),
+                        subtitle: Text('من خلال بطاقات ليبيا الرقمية',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 18))
-                      ]),
+                                fontWeight: FontWeight.w400, fontSize: 15)),
+                      ),
                       activeColor: AppColors.button,
                       onChanged: (newValue) {
                         _controller.setSelectedPaymentMethodType(newValue);
@@ -170,11 +171,11 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
   _buildNextButton() {
     return Container(
         height: 60,
-        padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+        padding: EdgeInsets.only(bottom: 10, left: 20, right: 20),
         width: double.infinity,
         child: JRaisedButton(
             onPressed: () {
-              if (_controller.selectedPaymentMethod == PaymentMethod.ReceivePay)
+              if (_controller.selectedPaymentMethod == PaymentMethod.Cash)
                 Navigator.pushNamed(
                     context, AppRoute.paymentCustomerInformationRoute);
               else

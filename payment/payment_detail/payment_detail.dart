@@ -2,12 +2,15 @@ import 'package:mycarts/app_route.dart';
 import 'package:mycarts/colors.dart';
 import 'package:mycarts/payment/payment_detail/payment_detail_controller.dart';
 import 'package:mycarts/shared/widgets/closable.dart';
-import 'package:mycarts/shared/widgets/j_outline_button.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mycarts/shared/localization/app_localization.dart';
+import 'package:mycarts/shared/widgets/toaster.dart';
 
 class PaymentDetailPage extends StatefulWidget {
   @override
@@ -30,7 +33,8 @@ class _PaymentDetailPageState extends State<PaymentDetailPage> {
                 onPressed: () {}),
             IconButton(
                 icon: Icon(Icons.shopping_cart, color: AppColors.white),
-                onPressed: () {}),
+                onPressed: () => Navigator.pushReplacementNamed(
+                    context, AppRoute.shoppingCartRoute))
           ]),
       body: Observer(
           builder: (_) => Stack(children: [
@@ -56,7 +60,7 @@ class _PaymentDetailPageState extends State<PaymentDetailPage> {
                     visible: _controller.loading,
                     child: Center(child: Loader()))
               ])),
-      bottomNavigationBar: _bottomNextPreviousButtons(),
+      bottomNavigationBar: _bottomPayButton(),
     );
   }
 
@@ -74,11 +78,12 @@ class _PaymentDetailPageState extends State<PaymentDetailPage> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('الاسم',
+                Text('اسم البنك',
                     style: TextStyle(color: Colors.black, fontSize: 17)),
                 SizedBox(height: 5),
                 TextFormField(
                     style: TextStyle(color: AppColors.black),
+                    textInputAction: TextInputAction.next,
                     // onChanged: (value) =>
                     //     _registerController.model.fullName = value,
                     // validator: (_) => _registerController.checkFullName(),
@@ -92,7 +97,7 @@ class _PaymentDetailPageState extends State<PaymentDetailPage> {
                           borderRadius: new BorderRadius.circular(10),
                         ))),
                 SizedBox(height: 10),
-                Text('رقم الحساب',
+                Text(' المدينة',
                     style: TextStyle(color: Colors.black, fontSize: 17)),
                 SizedBox(height: 5),
                 TextFormField(
@@ -112,11 +117,11 @@ class _PaymentDetailPageState extends State<PaymentDetailPage> {
                           borderRadius: new BorderRadius.circular(10),
                         ))),
                 SizedBox(height: 10),
-                Text('اسم الفرع',
+                Text(' المبلغ',
                     style: TextStyle(color: Colors.black, fontSize: 17)),
                 SizedBox(height: 5),
                 TextFormField(
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.numberWithOptions(),
                     textInputAction: TextInputAction.next,
                     // onChanged: (value) =>
                     //     _registerController.model.phoneNumber = value,
@@ -131,32 +136,146 @@ class _PaymentDetailPageState extends State<PaymentDetailPage> {
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(10),
                         ))),
+                SizedBox(height: 5),
+                Text(' ارفق صورة الوصل',
+                    style: TextStyle(color: Colors.black, fontSize: 17)),
+                TextFormField(
+                    readOnly: true,
+                    textInputAction: TextInputAction.next,
+                    // onChanged: (value) =>
+                    //     _registerController.model.phoneNumber = value,
+                    // validator: (_) => _registerController.checkPhoneNumber(),
+                    onFieldSubmitted: (_) => KeyBoard.close(context),
+                    style: TextStyle(color: Colors.white),
+                    maxLines: 2,
+                    decoration: InputDecoration(
+                        fillColor: Colors.white10,
+                        filled: true,
+                        labelStyle: TextStyle(color: AppColors.black),
+                        prefixIcon: GestureDetector(
+                            onTap: () => _buildMediaSelector(),
+                            child: Icon(Icons.cloud_upload)),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        border: OutlineInputBorder(
+                          borderRadius: new BorderRadius.circular(10),
+                        ))),
+                SizedBox(height: 5),
+                Text('  ملاحظة',
+                    style: TextStyle(color: Colors.black, fontSize: 17)),
+                TextFormField(
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    // onChanged: (value) =>
+                    //     _registerController.model.phoneNumber = value,
+                    // validator: (_) => _registerController.checkPhoneNumber(),
+                    onFieldSubmitted: (_) => KeyBoard.close(context),
+                    style: TextStyle(color: Colors.white),
+                    maxLines: 2,
+                    decoration: InputDecoration(
+                        hintText: 'اكتب ملاحظة',
+                        fillColor: Colors.white10,
+                        filled: true,
+                        labelStyle: TextStyle(color: AppColors.black),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        border: OutlineInputBorder(
+                          borderRadius: new BorderRadius.circular(10),
+                        ))),
               ]),
         ]);
   }
 
-  _bottomNextPreviousButtons() {
+  _bottomPayButton() {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        color: Colors.white30,
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Divider(),
-          Row(children: <Widget>[
-            Expanded(
-                child: JOutlineButton(
-                    color: AppColors.button,
-                    onPressed: () {
-                      KeyBoard.close(context);
-                      Navigator.pop(context);
-                    },
-                    text: 'السابق')),
-            SizedBox(width: 15),
-            Expanded(
-                child: JRaisedButton(
-                    onPressed: () => Navigator.pushNamed(
-                        context, AppRoute.paymentCustomerInformationRoute),
-                    text: 'التالي'))
-          ])
-        ]));
+        height: 60,
+        width: double.infinity,
+        padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
+        child: JRaisedButton(
+            onPressed: () => Navigator.pushNamed(
+                context, AppRoute.paymentCustomerInformationRoute),
+            text: 'ادفع'));
+  }
+
+  _buildMediaSelector() {
+    showModalBottomSheet<dynamic>(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            color: AppColors.BottomPanel,
+            child: Container(
+                decoration: BoxDecoration(
+                    color: AppColors.songItemCard,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15))),
+                height: 80,
+                padding: EdgeInsets.only(left: 10, right: 10, top: 15),
+                width: MediaQuery.of(context).size.width,
+                child: SafeArea(
+                  top: false,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              _openCamera();
+                            },
+                            child: Column(children: <Widget>[
+                              SvgPicture.asset('assets/svg/camera.svg',
+                                  color: AppColors.white,
+                                  width: 30,
+                                  height: 30),
+                              SizedBox(height: 5),
+                              Text(AppLocalization.camera,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      .copyWith(color: AppColors.white))
+                            ])),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              _openGallery();
+                            },
+                            child: Column(children: <Widget>[
+                              SvgPicture.asset('assets/svg/gallery.svg',
+                                  color: AppColors.white,
+                                  width: 30,
+                                  height: 30),
+                              SizedBox(height: 5),
+                              Text(AppLocalization.gallery,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      .copyWith(color: AppColors.white))
+                            ]))
+                      ]),
+                )),
+          );
+        });
+  }
+
+  _openCamera() {
+    KeyBoard.close(context);
+    ImagePicker()
+        .getImage(source: ImageSource.camera, maxHeight: 200)
+        .then((picture) {
+      // _setFile(isIdNumber, picture);
+    }).catchError((e) {
+      Toaster.warning(AppLocalization.openCameraPermission);
+    });
+  }
+
+  _openGallery() async {
+    KeyBoard.close(context);
+    ImagePicker()
+        .getImage(source: ImageSource.gallery, maxHeight: 200)
+        .then((picture) {
+      // _setFile(isIdNumber, picture);
+    }).catchError((e) {
+      Toaster.warning(AppLocalization.openGalleryPermission);
+    });
   }
 }
