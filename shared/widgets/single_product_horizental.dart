@@ -40,11 +40,8 @@ class _SingleProductHorizentalState extends State<SingleProductHorizental> {
                         flex: 1,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              singleProduct.image,
-                              fit: BoxFit.cover,
-                              height: 100,
-                            ))),
+                            child: Image.asset(singleProduct.image,
+                                fit: BoxFit.cover, height: 100))),
                     Expanded(
                         flex: 2,
                         child: Padding(
@@ -107,8 +104,7 @@ class _SingleProductHorizentalState extends State<SingleProductHorizental> {
                                           },
                                           child: Icon(Icons.add_shopping_cart)),
                                       InkWell(
-                                        onTap: () =>
-                                            singleProduct.changeWishStatus(),
+                                        onTap: () {},
                                         child: Icon(
                                             singleProduct.isWish
                                                 ? EvaIcons.gift
@@ -118,12 +114,19 @@ class _SingleProductHorizentalState extends State<SingleProductHorizental> {
                                                 : Colors.black),
                                       ),
                                       InkWell(
-                                          onTap: () {},
-                                          child: Icon(
-                                            EvaIcons.closeCircle,
-                                            size: 30,
-                                            color: AppColors.button,
-                                          ))
+                                          onTap: () {
+                                            setState(() {
+                                              if (singleProduct.isWish)
+                                                singleProduct
+                                                    .changeWishStatus();
+                                              else if (singleProduct.isFavorite)
+                                                singleProduct
+                                                    .changeFavoriteStatus();
+                                            });
+                                          },
+                                          child: Icon(EvaIcons.closeCircle,
+                                              size: 30,
+                                              color: AppColors.button))
                                     ]))
                                   ])
                                 ])))

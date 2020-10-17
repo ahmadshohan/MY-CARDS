@@ -5,6 +5,7 @@ import 'package:mycarts/colors.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/payment/payment_customer_information/payment_customer_information_controller.dart';
 import 'package:mycarts/product/product_detail/product_detail_controller.dart';
+import 'package:mycarts/shared/search/app_search.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
 
@@ -31,7 +32,9 @@ class _PaymentCustomerInformationPageState
           actions: [
             IconButton(
                 icon: Icon(Icons.search, color: AppColors.white),
-                onPressed: () {}),
+                onPressed: () {
+                  showSearch(context: context, delegate: AppSearch());
+                }),
             IconButton(
                 icon: Icon(Icons.shopping_cart, color: AppColors.white),
                 onPressed: () => Navigator.pushReplacementNamed(
@@ -90,8 +93,9 @@ class _PaymentCustomerInformationPageState
         width: double.infinity,
         padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
         child: JRaisedButton(
-            onPressed: () =>
-                Navigator.pushReplacementNamed(context, AppRoute.ordersRoute),
+            onPressed: () {
+              _productDetailController.buyNow(context);
+            },
             text: 'تم'));
   }
 }

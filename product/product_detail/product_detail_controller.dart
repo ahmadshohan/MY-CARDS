@@ -40,18 +40,130 @@ abstract class _ProductDetailControllerBase with Store {
   @observable
   int quantity = 1;
 
+  @observable
+  bool offer5 = false;
+
+  @observable
+  bool offer30 = false;
+
+  @observable
+  bool offer58 = false;
+
+  @observable
+  bool offer128 = false;
+
+  @observable
+  bool offer288 = false;
+
+  @observable
+  bool offer440 = false;
+
+  @observable
+  bool offer880 = false;
+
+  @action
+  void selectedOffer5() {
+    if (offer30 == false &&
+        offer58 == false &&
+        offer128 == false &&
+        offer288 == false &&
+        offer440 == false &&
+        offer880 == false)
+      offer5 = !offer5;
+    else
+      offer5 = offer5;
+  }
+
+  @action
+  void selectedOffer30() {
+    if (offer5 == false &&
+        offer58 == false &&
+        offer128 == false &&
+        offer288 == false &&
+        offer440 == false &&
+        offer880 == false)
+      offer30 = !offer30;
+    else
+      offer30 = offer30;
+  }
+
+  @action
+  void selectedOffer58() {
+    if (offer5 == false &&
+        offer30 == false &&
+        offer128 == false &&
+        offer288 == false &&
+        offer440 == false &&
+        offer880 == false)
+      offer58 = !offer58;
+    else
+      offer58 = offer58;
+  }
+
+  @action
+  void selectedOffer128() {
+    if (offer5 == false &&
+        offer30 == false &&
+        offer58 == false &&
+        offer288 == false &&
+        offer440 == false &&
+        offer880 == false)
+      offer128 = !offer128;
+    else
+      offer128 = offer128;
+  }
+
+  @action
+  void selectedOffer288() {
+    if (offer5 == false &&
+        offer30 == false &&
+        offer58 == false &&
+        offer128 == false &&
+        offer440 == false &&
+        offer880 == false)
+      offer288 = !offer288;
+    else
+      offer288 = offer288;
+  }
+
+  @action
+  void selectedOffer440() {
+    if (offer5 == false &&
+        offer30 == false &&
+        offer58 == false &&
+        offer128 == false &&
+        offer288 == false &&
+        offer880 == false)
+      offer440 = !offer440;
+    else
+      offer440 = offer440;
+  }
+
+  @action
+  void selectedOffer880() {
+    if (offer5 == false &&
+        offer30 == false &&
+        offer58 == false &&
+        offer128 == false &&
+        offer288 == false &&
+        offer440 == false)
+      offer880 = !offer880;
+    else
+      offer880 = offer880;
+  }
+
   @action
   void selectedSize(String selectedSize) {
     size = selectedSize;
   }
 
   @action
-  void selectedQuantity(int selectedQuantity) {
+  selectedQuantity(int selectedQuantity) {
     quantity = selectedQuantity;
   }
 
   @action
-  handleBuyNow(BuildContext context) async {
+  buyNow(BuildContext context) async {
     loading = true;
     Provider.of<Orders>(context, listen: false).addOrder(
       cart.cartItems.values.toList(),

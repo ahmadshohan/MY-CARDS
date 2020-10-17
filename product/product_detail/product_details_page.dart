@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mycarts/shared/search/app_search.dart';
+import 'package:mycarts/shared/widgets/closable.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mycarts/colors.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter_share/flutter_share.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/shared/widgets/dialogs/AppDialogs.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
-import 'package:mycarts/product/product_detail/widgets/peoduct_detail_tab_bar.dart';
 import 'package:mycarts/product/product_detail/product_detail_controller.dart';
-import 'package:mycarts/shared/constant/data_list.dart';
 import 'package:mycarts/shared/widgets/single_product_vertical.dart';
 import 'package:mycarts/provider/products.dart';
 
@@ -43,7 +41,9 @@ class _ProductDetailsState extends State<ProductDetails> {
         appBar: AppBar(backgroundColor: AppColors.button, actions: [
           IconButton(
               icon: Icon(Icons.search, color: AppColors.white),
-              onPressed: () {}),
+              onPressed: () {
+                showSearch(context: context, delegate: AppSearch());
+              }),
           IconButton(
               icon: Icon(Icons.shopping_cart, color: AppColors.white),
               onPressed: () => Navigator.pushReplacementNamed(
@@ -61,7 +61,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                       _sliverProductPhotosBar(loadedProduct),
                       SliverList(
                           delegate: SliverChildListDelegate([
-                        _buildSingleProductWithoutPicture(loadedProduct),
+                        _buildSingleProductWithoutPicture(),
+                        if (loadedProduct.category == 'pubg')
+                          _buildPubgInputs(),
                         _moreProductRelated(productsFilterd),
                         _buildProductPrice(loadedProduct),
                       ]))
@@ -95,70 +97,440 @@ class _ProductDetailsState extends State<ProductDetails> {
         ));
   }
 
-  _buildSingleProductWithoutPicture(Product loadedProduct) {
+  _buildSingleProductWithoutPicture() {
     return Card(
         shape: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             borderSide: BorderSide.none),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(children: [
-              Text('رصيد البلايستيشن105',
+            padding: const EdgeInsets.all(8.0),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(children: [
+                Text('رصيد البلايستيشن105',
+                    textAlign: TextAlign.right,
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF3C3C3C))),
+                Spacer(),
+                Icon(EvaIcons.star, color: AppColors.button),
+                Icon(EvaIcons.gift, color: AppColors.button)
+              ]),
+              Row(children: [
+                Text('تقييم المشتركين للبطاقة ',
+                    textAlign: TextAlign.right,
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF3C3C3C))),
+                Icon(EvaIcons.star, color: Colors.amber),
+                Icon(EvaIcons.star, color: Colors.amber),
+                Icon(EvaIcons.star, color: Colors.amber),
+                Icon(EvaIcons.star, color: Colors.amber),
+                Icon(EvaIcons.star, color: Colors.amber),
+              ]),
+              SizedBox(height: 10),
+              Text(
+                  'اشحن رصيد جوالك في السعودية عبر الانترنت باستخدام بطاقات شحن بلايستيشن المتاحة بالعديد من الفئات المختلفة',
                   textAlign: TextAlign.right,
-                  maxLines: 1,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF3C3C3C))),
-              Spacer(),
-              Icon(EvaIcons.star, color: AppColors.button),
-              Icon(EvaIcons.gift, color: AppColors.button)
-            ]),
-            Row(children: [
-              Text('تقييم المشتركين للبطاقة ',
-                  textAlign: TextAlign.right,
-                  maxLines: 1,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF3C3C3C))),
-              Icon(EvaIcons.star, color: Colors.amber),
-              Icon(EvaIcons.star, color: Colors.amber),
-              Icon(EvaIcons.star, color: Colors.amber),
-              Icon(EvaIcons.star, color: Colors.amber),
-              Icon(EvaIcons.star, color: Colors.amber),
-            ]),
-            SizedBox(height: 10),
-            Text(
-                'اشحن رصيد جوالك في السعودية عبر الانترنت باستخدام بطاقات شحن بلايستيشن المتاحة بالعديد من الفئات المختلفة',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF3C3C3C))),
-            SizedBox(height: 10),
-            Text('لمعرفة لمزيد من التفاصيل عن البطاقة وكيفية استخدامها',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF3C3C3C))),
-            SizedBox(height: 10),
-            Center(
-              child: Text('اضغط هنا',
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.button)),
-            ),
-          ]),
-        ));
+                      color: Color(0xFF3C3C3C))),
+              SizedBox(height: 10),
+              Text('لمعرفة لمزيد من التفاصيل عن البطاقة وكيفية استخدامها',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF3C3C3C))),
+              SizedBox(height: 10),
+              Center(
+                child: Text('اضغط هنا',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.button)),
+              )
+            ])));
+  }
+
+  _pubgChargerKinds() {
+    return Column(children: [
+      Card(
+          child: Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.orange),
+              child: Observer(
+                  builder: (_) => CheckboxListTile(
+                        activeColor: Colors.blue,
+                        checkColor: AppColors.button,
+                        value: _controller.offer5,
+                        onChanged: (value) => _controller.selectedOffer5(),
+                        title: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Text('life After 60 +5 Credits Code',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.black)),
+                              ),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                  height: 30,
+                                  child: RaisedButton(
+                                      child: Text(" promotion",
+                                          style: TextStyle(fontSize: 11)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      color: AppColors.button,
+                                      textColor: AppColors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7)),
+                                      onPressed: () {}))
+                            ]),
+                        subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                                'Buy 1*life After 60+5 Credits Discount :5%',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.black))),
+                      )))),
+      Card(
+          child: Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.orange),
+              child: Observer(
+                  builder: (_) => CheckboxListTile(
+                        activeColor: Colors.blue,
+                        checkColor: AppColors.button,
+                        value: _controller.offer30,
+                        onChanged: (value) => _controller.selectedOffer30(),
+                        title: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Text('life After 300 +30 Credits Code',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.black)),
+                              ),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                  height: 30,
+                                  child: RaisedButton(
+                                      child: Text(" promotion",
+                                          style: TextStyle(fontSize: 11)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      color: AppColors.button,
+                                      textColor: AppColors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7)),
+                                      onPressed: () {}))
+                            ]),
+                        subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                                'Buy 1*life After 300+30 Credits Discount :5%',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.black))),
+                      )))),
+      Card(
+          child: Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.orange),
+              child: Observer(
+                  builder: (_) => CheckboxListTile(
+                        activeColor: Colors.blue,
+                        checkColor: AppColors.button,
+                        value: _controller.offer58,
+                        onChanged: (value) => _controller.selectedOffer58(),
+                        title: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                  child: Text('life After 500 +58 Credits Code',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.black))),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                  height: 30,
+                                  child: RaisedButton(
+                                      child: Text(" promotion",
+                                          style: TextStyle(fontSize: 11)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      color: AppColors.button,
+                                      textColor: AppColors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7)),
+                                      onPressed: () {}))
+                            ]),
+                        subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                                'Buy 1*life After 500+58 Credits Discount :5%',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.black))),
+                      )))),
+      Card(
+          child: Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.orange),
+              child: Observer(
+                  builder: (_) => CheckboxListTile(
+                        activeColor: Colors.blue,
+                        checkColor: AppColors.button,
+                        value: _controller.offer128,
+                        onChanged: (value) => _controller.selectedOffer128(),
+                        title: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text('life After 980 +128 Credits Code',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.black)),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                  height: 30,
+                                  child: RaisedButton(
+                                      child: Text(" promotion",
+                                          style: TextStyle(fontSize: 11)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      color: AppColors.button,
+                                      textColor: AppColors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7)),
+                                      onPressed: () {}))
+                            ]),
+                        subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                                'Buy 1*life After 980+128 Credits Discount :5%',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.black))),
+                      )))),
+      Card(
+          child: Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.orange),
+              child: Observer(
+                  builder: (_) => CheckboxListTile(
+                        activeColor: Colors.blue,
+                        checkColor: AppColors.button,
+                        value: _controller.offer288,
+                        onChanged: (value) => _controller.selectedOffer288(),
+                        title: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Text('life After 1980 +288 Credits Code',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.black)),
+                              ),
+                              SizedBox(width: 5),
+                              SizedBox(
+                                  height: 30,
+                                  child: RaisedButton(
+                                      child: Text(" promotion",
+                                          style: TextStyle(fontSize: 11)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      color: AppColors.button,
+                                      textColor: AppColors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7)),
+                                      onPressed: () {}))
+                            ]),
+                        subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                                'Buy 1*life After 1980 +288 Credits Discount :5%',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.black))),
+                      )))),
+      Card(
+          child: Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.orange),
+              child: Observer(
+                  builder: (_) => CheckboxListTile(
+                        activeColor: Colors.blue,
+                        checkColor: AppColors.button,
+                        value: _controller.offer440,
+                        onChanged: (value) => _controller.selectedOffer440(),
+                        title: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Text('life After 2980 +288 Credits Code',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.black)),
+                              ),
+                              SizedBox(width: 5),
+                              SizedBox(
+                                  height: 30,
+                                  child: RaisedButton(
+                                      child: Text(" promotion",
+                                          style: TextStyle(fontSize: 11)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      color: AppColors.button,
+                                      textColor: AppColors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7)),
+                                      onPressed: () {}))
+                            ]),
+                        subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                                'Buy 1*life After 2980 +288 Credits Discount :5%',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.black))),
+                      )))),
+      Card(
+          child: Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.orange),
+              child: Observer(
+                  builder: (_) => CheckboxListTile(
+                        activeColor: Colors.blue,
+                        checkColor: AppColors.button,
+                        value: _controller.offer880,
+                        onChanged: (value) => _controller.selectedOffer880(),
+                        title: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text('life After 4880 +888 Credits Code',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.black)),
+                              SizedBox(width: 5),
+                              SizedBox(
+                                  height: 30,
+                                  child: RaisedButton(
+                                      child: Text(" promotion",
+                                          style: TextStyle(fontSize: 11)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      color: AppColors.button,
+                                      textColor: AppColors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7)),
+                                      onPressed: () {}))
+                            ]),
+                        subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                                'Buy 1*life After 4880 +888 Credits Discount :5%',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.black))),
+                      ))))
+    ]);
+  }
+
+  _buildPubgInputs() {
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _pubgChargerKinds(),
+                Text('player name',
+                    style: TextStyle(color: Colors.black, fontSize: 15)),
+                SizedBox(height: 5),
+                TextFormField(
+                    style: TextStyle(color: AppColors.black),
+                    textInputAction: TextInputAction.next,
+                    // onChanged: (value) =>
+                    //     _registerController.model.fullName = value,
+                    // validator: (_) => _registerController.checkFullName(),
+                    onFieldSubmitted: (_) => KeyBoard.close(context),
+                    decoration: InputDecoration(
+                        hintText: 'ahmad shohan',
+                        hintStyle: TextStyle(fontSize: 14),
+                        fillColor: AppColors.white,
+                        filled: true,
+                        labelStyle: TextStyle(color: AppColors.black),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        border: OutlineInputBorder(
+                          borderRadius: new BorderRadius.circular(10),
+                        ))),
+                SizedBox(height: 10),
+                Text(' player ID',
+                    style: TextStyle(color: Colors.black, fontSize: 15)),
+                SizedBox(height: 5),
+                TextFormField(
+                    keyboardType: TextInputType.numberWithOptions(),
+                    textInputAction: TextInputAction.next,
+                    // onChanged: (value) =>
+                    //     _registerController.model.email = value,
+                    // validator: (_) => _registerController.checkEmail(),
+                    onFieldSubmitted: (_) => KeyBoard.close(context),
+                    style: TextStyle(color: AppColors.black),
+                    decoration: InputDecoration(
+                        hintText: 'ahmad shohan',
+                        hintStyle: TextStyle(fontSize: 14),
+                        fillColor: Colors.white10,
+                        filled: true,
+                        labelStyle: TextStyle(color: AppColors.black),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        border: OutlineInputBorder(
+                          borderRadius: new BorderRadius.circular(10),
+                        ))),
+              ]),
+        ]);
   }
 
   _moreProductRelated(List<Product> productsFilterd) {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.35,
+        height: MediaQuery.of(context).size.height * 0.26,
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,

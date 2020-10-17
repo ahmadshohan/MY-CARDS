@@ -16,88 +16,105 @@ class SingleProductVertical extends StatelessWidget {
         child: Card(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-                    Widget>[
-              Expanded(
-                  child: Row(children: [
-                Expanded(
-                    child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(20)),
-                        child: Image.asset(singleProduct.image,
-                            fit: BoxFit.cover)))
-              ])),
-              Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  child: Column(children: [
-                    Row(children: [
-                      Text('رصيد المنتج', overflow: TextOverflow.ellipsis),
-                      SizedBox(width: 10),
-                      Text('16', overflow: TextOverflow.ellipsis)
-                    ]),
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Expanded(
-                          flex: 2,
-                          child: Row(mainAxisSize: MainAxisSize.min, children: [
-                            InkWell(
-                                onTap: () {
-                                  product.addCart(
-                                    productId: singleProduct.id,
-                                    title: singleProduct.name,
-                                    currentPrice: singleProduct.currentPrice,
-                                    oldPrice: singleProduct.oldPrice,
-                                    isFavorite: singleProduct.isFavorite,
-                                    isWish: singleProduct.isWish,
-                                    image: singleProduct.image,
-                                  );
-                                  Scaffold.of(context).hideCurrentSnackBar();
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text(
-                                          'تم اضافة المنتج الى السلة ',
-                                          style: TextStyle(fontSize: 17)),
-                                      duration: Duration(seconds: 3),
-                                      elevation: 3,
-                                      action: SnackBarAction(
-                                        label: 'تراجع',
-                                        onPressed: () {
-                                          product.removeSingleItem(
-                                            singleProduct.id,
-                                          );
-                                        },
-                                      )));
-                                },
-                                child: Icon(Icons.add_shopping_cart)),
-                            InkWell(
-                                onTap: () => singleProduct.changeWishStatus(),
-                                child: Icon(
-                                    singleProduct.isWish
-                                        ? EvaIcons.gift
-                                        : EvaIcons.giftOutline,
-                                    color: singleProduct.isWish
-                                        ? Colors.red
-                                        : Colors.black)),
-                            InkWell(
-                                onTap: () =>
-                                    singleProduct.changeFavoriteStatus(),
-                                child: Icon(
-                                    singleProduct.isFavorite
-                                        ? Icons.star
-                                        : Icons.star_border,
-                                    color: singleProduct.isFavorite
-                                        ? Colors.red
-                                        : Colors.black))
-                          ])),
-                      Expanded(
-                          flex: 1,
-                          child: Text(
-                              "${singleProduct.currentPrice.toString()} دل",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 10, color: AppColors.button)))
-                    ])
-                  ]))
-            ])));
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                      flex: 1,
+                      child: Row(children: [
+                        Expanded(
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20)),
+                                child: Image.asset(singleProduct.image,
+                                    fit: BoxFit.cover)))
+                      ])),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        Row(children: [
+                          Text('رصيد المنتج', overflow: TextOverflow.ellipsis),
+                          SizedBox(width: 10),
+                          Text('16', overflow: TextOverflow.ellipsis)
+                        ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  flex: 2,
+                                  child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        InkWell(
+                                            onTap: () {
+                                              product.addCart(
+                                                productId: singleProduct.id,
+                                                title: singleProduct.name,
+                                                currentPrice:
+                                                    singleProduct.currentPrice,
+                                                oldPrice:
+                                                    singleProduct.oldPrice,
+                                                isFavorite:
+                                                    singleProduct.isFavorite,
+                                                isWish: singleProduct.isWish,
+                                                image: singleProduct.image,
+                                              );
+                                              Scaffold.of(context)
+                                                  .hideCurrentSnackBar();
+                                              Scaffold.of(context).showSnackBar(
+                                                  SnackBar(
+                                                      content: Text(
+                                                          'تم اضافة المنتج الى السلة ',
+                                                          style: TextStyle(
+                                                              fontSize: 17)),
+                                                      duration:
+                                                          Duration(seconds: 3),
+                                                      elevation: 3,
+                                                      action: SnackBarAction(
+                                                        label: 'تراجع',
+                                                        onPressed: () {
+                                                          product
+                                                              .removeSingleItem(
+                                                            singleProduct.id,
+                                                          );
+                                                        },
+                                                      )));
+                                            },
+                                            child:
+                                                Icon(Icons.add_shopping_cart)),
+                                        InkWell(
+                                            onTap: () => singleProduct
+                                                .changeWishStatus(),
+                                            child: Icon(
+                                                singleProduct.isWish
+                                                    ? EvaIcons.gift
+                                                    : EvaIcons.giftOutline,
+                                                color: singleProduct.isWish
+                                                    ? Colors.red
+                                                    : Colors.black)),
+                                        InkWell(
+                                            onTap: () => singleProduct
+                                                .changeFavoriteStatus(),
+                                            child: Icon(
+                                                singleProduct.isFavorite
+                                                    ? Icons.star
+                                                    : Icons.star_border,
+                                                color: singleProduct.isFavorite
+                                                    ? Colors.red
+                                                    : Colors.black))
+                                      ])),
+                              Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                      "${singleProduct.currentPrice.toString()} دل",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          color: AppColors.button)))
+                            ])
+                      ]))
+                ])));
   }
 }

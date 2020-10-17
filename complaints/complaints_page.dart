@@ -1,4 +1,5 @@
 import 'package:mycarts/complaints/complaints_controller.dart';
+import 'package:mycarts/shared/search/app_search.dart';
 import 'package:mycarts/shared/widgets/closable.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
@@ -26,7 +27,9 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
           actions: [
             IconButton(
                 icon: Icon(Icons.search, color: AppColors.white),
-                onPressed: () {}),
+                onPressed: () {
+                  showSearch(context: context, delegate: AppSearch());
+                }),
             IconButton(
                 icon: Icon(Icons.shopping_cart, color: AppColors.white),
                 onPressed: () {}),

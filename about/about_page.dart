@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mycarts/colors.dart';
 import 'package:mycarts/shared/localization/app_localization.dart';
+import 'package:mycarts/shared/search/app_search.dart';
 
 class AboutPage extends StatelessWidget {
   @override
@@ -15,7 +16,9 @@ class AboutPage extends StatelessWidget {
           actions: [
             IconButton(
                 icon: Icon(Icons.search, color: AppColors.white),
-                onPressed: () {}),
+                onPressed: () {
+                  showSearch(context: context, delegate: AppSearch());
+                }),
             IconButton(
                 icon: Icon(Icons.shopping_cart, color: AppColors.white),
                 onPressed: () {})

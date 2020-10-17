@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/payment/payment_method/payment_method_controller.dart';
 import 'package:mycarts/shared/constant/payment_method.dart';
+import 'package:mycarts/shared/search/app_search.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
 import 'package:mycarts/colors.dart';
@@ -33,7 +34,9 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
           actions: [
             IconButton(
                 icon: Icon(Icons.search, color: AppColors.white),
-                onPressed: () {}),
+                onPressed: () {
+                  showSearch(context: context, delegate: AppSearch());
+                }),
             IconButton(
                 icon: Icon(Icons.shopping_cart, color: AppColors.white),
                 onPressed: () => Navigator.pushReplacementNamed(

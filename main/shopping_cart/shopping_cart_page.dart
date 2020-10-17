@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mycarts/shared/search/app_search.dart';
 import 'package:provider/provider.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/colors.dart';
@@ -46,7 +47,9 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             actions: [
               IconButton(
                   icon: Icon(Icons.search, color: AppColors.white),
-                  onPressed: () {}),
+                  onPressed: () {
+                    showSearch(context: context, delegate: AppSearch());
+                  }),
             ]),
         drawer: AppDrawer(),
         body: cartItems.isEmpty || cart.totalAmount == 0

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'cart_item.dart';
+import 'package:mycarts/provider/cart_item.dart';
 
 class Product with ChangeNotifier {
   final String id, category, name, descreption, image, color, size;
@@ -35,68 +35,100 @@ class Products with ChangeNotifier {
   List<Product> _productsList = [
     Product(
         id: 'tops1',
-        name: "Long sleeved top",
-        category: 'Tops',
-        descreption: "Long sleeved top /hit of season /",
-        image: 'assets/jpg/dr1.jpeg',
-        oldPrice: 70000,
-        currentPrice: 50000),
+        name: "pubg mobile1",
+        category: 'pubg',
+        descreption: "new pubg mobile1",
+        image: 'assets/jpg/pubg.jpg',
+        oldPrice: 700,
+        currentPrice: 500),
     Product(
         id: 'tops2',
-        name: "Black elegant top",
-        category: 'Tops',
-        descreption: "Black elegant top",
-        image: 'assets/jpg/dr1.jpeg',
-        oldPrice: 50000,
-        currentPrice: 30000),
+        name: "pubg mobile 2",
+        category: 'pubg',
+        descreption: "new pubg mobile 2",
+        image: 'assets/jpg/pubg.jpg',
+        oldPrice: 500,
+        currentPrice: 300),
     Product(
         id: 'tops3',
-        name: "Trendy grey top",
-        category: 'Tops',
-        descreption: "Trendy grey top /fleece inside/",
-        image: 'assets/jpg/dr1.jpeg',
-        oldPrice: 70000,
-        currentPrice: 45000),
+        name: "pubg mobile 3",
+        category: 'pubg',
+        descreption: "new pubg mobile 3",
+        image: 'assets/jpg/pubg.jpg',
+        oldPrice: 600,
+        currentPrice: 200),
     Product(
         id: 'tops4',
-        name: "Different cotton shirts",
-        category: 'Tops',
-        descreption: "Different cotton shirts",
-        image: 'assets/jpg/dr1.jpeg',
-        oldPrice: 55000,
-        currentPrice: 30000),
+        name: "pubg mobile 4",
+        category: 'pubg',
+        descreption: "new pubg mobile 4",
+        image: 'assets/jpg/pubg.jpg',
+        oldPrice: 420,
+        currentPrice: 120),
     Product(
         id: 'tops5',
+        name: "pubg mobile 5",
+        category: 'pubg',
+        descreption: "new pubg mobile 5",
+        image: 'assets/jpg/pubg.jpg',
+        oldPrice: 300,
+        currentPrice: 100),
+    Product(
+        id: 'tops6',
+        name: "playstation credit1",
+        category: 'playstation',
+        descreption: "new playstation credit1",
+        image: 'assets/jpg/playstation.jpg',
+        oldPrice: 700,
+        currentPrice: 450),
+    Product(
+        id: 'tops7',
+        name: "playstation credit2",
+        category: 'playstation',
+        descreption: "new playstation credit 2",
+        image: 'assets/jpg/playstation.jpg',
+        oldPrice: 550,
+        currentPrice: 350),
+    Product(
+        id: 'tops8',
+        name: "playstation credit3",
+        category: 'playstation',
+        descreption: "new playstation credit 3",
+        image: 'assets/jpg/playstation.jpg',
+        oldPrice: 650,
+        currentPrice: 300),
+    Product(
+        id: 'tops9',
+        name: "playstation credit4",
+        category: 'playstation',
+        descreption: "new playstation credit 4",
+        image: 'assets/jpg/playstation.jpg',
+        oldPrice: 150,
+        currentPrice: 50),
+    Product(
+        id: 'tops10',
+        name: "playstation credit5",
+        category: 'playstation',
+        descreption: "new playstation credit 5",
+        image: 'assets/jpg/playstation.jpg',
+        oldPrice: 50,
+        currentPrice: 30),
+    Product(
+        id: 'tops11',
         name: "Top fleece inside ",
         category: 'Tops',
         descreption: "Top fleece inside",
         image: 'assets/jpg/dr1.jpeg',
-        oldPrice: 55000,
-        currentPrice: 35000),
+        oldPrice: 550,
+        currentPrice: 350),
     Product(
-        id: 'tops7',
+        id: 'tops12',
         name: "Black top super",
         category: 'Tops',
         descreption: "Black top super",
         image: 'assets/jpg/dr1.jpeg',
-        oldPrice: 55000,
-        currentPrice: 45000),
-    Product(
-        id: 'tops8',
-        name: "Trendy top ",
-        category: 'Tops',
-        descreption: "Trendy top with leather sleeves",
-        image: 'assets/jpg/dr1.jpeg',
-        oldPrice: 70000,
-        currentPrice: 50000),
-    Product(
-        id: 'tops12',
-        name: "Elegant crop top ",
-        category: 'Tops',
-        descreption: "Elegant crop top with paillettes",
-        image: 'assets/jpg/dr1.jpeg',
-        oldPrice: 80000,
-        currentPrice: 65000),
+        oldPrice: 550,
+        currentPrice: 450),
   ];
 
   List<Product> get productsList {
@@ -110,11 +142,6 @@ class Products with ChangeNotifier {
   List<Product> get wishesProducts {
     return _productsList.where((prod) => prod.isWish).toList();
   }
-
-  // void removeWishProduct(String productId) {
-  //   wishesProducts.remove(productId);
-  //   notifyListeners();
-  // }
 
   Product findById(String id) {
     return _productsList.firstWhere((prod) => prod.id == id);

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mycarts/shared/search/app_search.dart';
 import 'package:provider/provider.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/colors.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:mycarts/shared/widgets/app_drawer.dart';
-import 'package:mycarts/myreward/single_myrewards_product_horizental.dart';
+import 'file:///C:/Users/ASUS/Desktop/mycarts/mycarts/lib/myreward/widgets/single_myrewards_product_horizental.dart';
 import 'package:mycarts/provider/products.dart';
 
 class MyRewardsPage extends StatefulWidget {
@@ -32,7 +33,9 @@ class _MyRewardsPageState extends State<MyRewardsPage> {
           actions: [
             IconButton(
                 icon: Icon(Icons.search, color: AppColors.white),
-                onPressed: () {}),
+                onPressed: () {
+                  showSearch(context: context, delegate: AppSearch());
+                }),
             IconButton(
                 icon: Icon(Icons.shopping_cart, color: AppColors.white),
                 onPressed: () => Navigator.pushReplacementNamed(

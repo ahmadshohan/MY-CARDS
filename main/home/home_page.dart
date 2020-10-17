@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:mycarts/app_route.dart';
+import 'package:mycarts/shared/search/app_search.dart';
 import 'package:provider/provider.dart';
 import 'package:mycarts/shared/widgets/app_drawer.dart';
 import 'package:mycarts/colors.dart';
@@ -80,7 +81,9 @@ class _HomePageState extends State<HomePage> {
                     actions: [
                   IconButton(
                       icon: Icon(Icons.search, color: AppColors.white),
-                      onPressed: () {}),
+                      onPressed: () {
+                        showSearch(context: context, delegate: AppSearch());
+                      }),
                   IconButton(
                       icon: Icon(Icons.shopping_cart, color: AppColors.white),
                       onPressed: () => Navigator.pushReplacementNamed(
@@ -94,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.asset(
-                      "assets/png/temp_news.png",
+                      'assets/jpg/pubg.jpg',
                       fit: BoxFit.cover,
                     )))
           ]),
@@ -129,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(left: 10),
                       child: Column(children: [
                         Expanded(
-                          child: Image.asset("assets/png/temp_news.png",
+                          child: Image.asset('assets/jpg/pubg.jpg',
                               width: MediaQuery.of(context).size.width * 0.35,
                               fit: BoxFit.cover),
                         ),
@@ -172,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(children: [
                               Expanded(
-                                  child: Image.asset("assets/png/temp_news.png",
+                                  child: Image.asset('assets/jpg/pubg.jpg',
                                       width: MediaQuery.of(context).size.width *
                                           0.35,
                                       fit: BoxFit.cover)),
@@ -214,7 +217,8 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(children: [
                               Expanded(
-                                  child: Image.asset("assets/png/temp_news.png",
+                                  child: Image.asset(
+                                      "assets/jpg/playstation.jpg",
                                       width: MediaQuery.of(context).size.width *
                                           0.35,
                                       fit: BoxFit.cover)),

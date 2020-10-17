@@ -5,6 +5,7 @@ import 'package:flutter_rating/flutter_rating.dart';
 import 'package:mycarts/colors.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/rate_us/rateus_controller.dart';
+import 'package:mycarts/shared/search/app_search.dart';
 import 'package:mycarts/shared/widgets/closable.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
@@ -27,7 +28,9 @@ class _RateUsPageState extends State<RateUsPage> {
           actions: [
             IconButton(
                 icon: Icon(Icons.search, color: AppColors.white),
-                onPressed: () {}),
+                onPressed: () {
+                  showSearch(context: context, delegate: AppSearch());
+                }),
             IconButton(
                 icon: Icon(Icons.shopping_cart, color: AppColors.white),
                 onPressed: () => Navigator.pushReplacementNamed(
