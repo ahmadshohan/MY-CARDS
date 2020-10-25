@@ -9,6 +9,21 @@ part of 'welcome_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$WelcomeController on _WelcomeControllerBase, Store {
+  final _$selectedLangAtom = Atom(name: '_WelcomeControllerBase.selectedLang');
+
+  @override
+  String get selectedLang {
+    _$selectedLangAtom.reportRead();
+    return super.selectedLang;
+  }
+
+  @override
+  set selectedLang(String value) {
+    _$selectedLangAtom.reportWrite(value, super.selectedLang, () {
+      super.selectedLang = value;
+    });
+  }
+
   final _$loadingAtom = Atom(name: '_WelcomeControllerBase.loading');
 
   @override
@@ -54,8 +69,26 @@ mixin _$WelcomeController on _WelcomeControllerBase, Store {
     });
   }
 
+  final _$initAsyncAction = AsyncAction('_WelcomeControllerBase.init');
+
+  @override
+  Future<dynamic> init() {
+    return _$initAsyncAction.run(() => super.init());
+  }
+
   final _$_WelcomeControllerBaseActionController =
       ActionController(name: '_WelcomeControllerBase');
+
+  @override
+  dynamic changeLangWord() {
+    final _$actionInfo = _$_WelcomeControllerBaseActionController.startAction(
+        name: '_WelcomeControllerBase.changeLangWord');
+    try {
+      return super.changeLangWord();
+    } finally {
+      _$_WelcomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   bool isRtl() {
@@ -71,6 +104,7 @@ mixin _$WelcomeController on _WelcomeControllerBase, Store {
   @override
   String toString() {
     return '''
+selectedLang: ${selectedLang},
 loading: ${loading},
 lang: ${lang},
 showPassword: ${showPassword}

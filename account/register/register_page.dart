@@ -8,6 +8,7 @@ import 'package:mycarts/shared/constant/data_list.dart';
 import 'package:mycarts/shared/widgets/closable.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
+import 'package:mycarts/shared/localization/app_localization.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -109,7 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Center(
-                      child: Text('حساب جديد',
+                      child: Text(AppLocalization.register,
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -121,10 +122,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         onChanged: (value) =>
                             _registerController.model.fullName = value,
                         validator: (_) => _registerController.checkFullName(),
-                        onFieldSubmitted: (_) => FocusScope.of(context)
-                            .requestFocus(_telefonNumberFN),
+                        onFieldSubmitted: (_) =>
+                            FocusScope.of(context).requestFocus(_emailFN),
                         decoration: InputDecoration(
-                            labelText: 'الأسم بالكامل',
+                            labelText: AppLocalization.name,
                             suffixIcon:
                                 Icon(EvaIcons.person, color: Colors.grey),
                             fillColor: AppColors.white,
@@ -143,12 +144,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             _registerController.model.email = value,
                         validator: (_) => _registerController.checkEmail(),
                         focusNode: _emailFN,
-                        onFieldSubmitted: (_) =>
-                            FocusScope.of(context).requestFocus(_passwordFN),
+                        onFieldSubmitted: (_) => FocusScope.of(context)
+                            .requestFocus(_telefonNumberFN),
                         style: TextStyle(color: AppColors.black),
                         decoration: InputDecoration(
-                            labelText: 'البريد الألكتروني',
-                            fillColor: Colors.white10,
+                            labelText: AppLocalization.email,
+                            fillColor: Colors.white,
                             filled: true,
                             suffixIcon:
                                 Icon(EvaIcons.email, color: Colors.grey),
@@ -179,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       closeIcon: Icon(Icons.close,
                                           color: Colors.black),
                                       searchDecoration: InputDecoration(
-                                        hintText: 'ابحث',
+                                        hintText: AppLocalization.search,
                                       ))),
                               Icon(Icons.arrow_drop_down, color: Colors.black)
                             ])),
@@ -193,17 +194,17 @@ class _RegisterPageState extends State<RegisterPage> {
                                   _registerController.model.phoneNumber = value,
                               validator: (_) =>
                                   _registerController.checkPhoneNumber(),
-                              onFieldSubmitted: (_) =>
-                                  FocusScope.of(context).requestFocus(_emailFN),
+                              onFieldSubmitted: (_) => FocusScope.of(context)
+                                  .requestFocus(_passwordFN),
                               inputFormatters: [
                                 WhitelistingTextInputFormatter.digitsOnly
                               ],
                               style: TextStyle(color: AppColors.black),
                               decoration: InputDecoration(
-                                  labelText: 'رقم الهاتف',
+                                  labelText: AppLocalization.phoneNumber,
                                   suffixIcon:
                                       Icon(EvaIcons.phone, color: Colors.grey),
-                                  fillColor: Colors.white10,
+                                  fillColor: Colors.white,
                                   filled: true,
                                   labelStyle: TextStyle(color: AppColors.black),
                                   contentPadding:
@@ -218,7 +219,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text('أختر محافظة',
+                          child: Text(AppLocalization.selectCity,
                               style:
                                   TextStyle(color: Colors.black, fontSize: 17)),
                         ),
@@ -230,7 +231,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Expanded(
                             flex: 1,
-                            child: Text('أختر نوع الحساب',
+                            child: Text(AppLocalization.selectAccountType,
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 15))),
                         Expanded(
@@ -251,8 +252,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 _registerController.checkPassword(),
                             obscureText: !_registerController.showPassword,
                             decoration: InputDecoration(
-                                labelText: 'كلمة المرور',
-                                fillColor: Colors.white10,
+                                labelText: AppLocalization.password,
+                                fillColor: Colors.white,
                                 filled: true,
                                 labelStyle: TextStyle(color: AppColors.black),
                                 contentPadding:
@@ -277,8 +278,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               _registerController.checkMatchPassword(),
                           obscureText: !_registerController.showPassword,
                           decoration: InputDecoration(
-                              labelText: 'تأكيد كلمة المرور',
-                              fillColor: Colors.white10,
+                              labelText: AppLocalization.confirmPassword,
+                              fillColor: Colors.white,
                               filled: true,
                               labelStyle: TextStyle(color: AppColors.black),
                               contentPadding:
@@ -312,7 +313,7 @@ class _RegisterPageState extends State<RegisterPage> {
             } else
               _registerController.autoValidate = true;
           },
-          text: "أنشئ حساب"),
+          text: AppLocalization.register),
     );
   }
 
@@ -320,18 +321,17 @@ class _RegisterPageState extends State<RegisterPage> {
     return GestureDetector(
         onTap: () =>
             Navigator.pushReplacementNamed(context, AppRoute.loginRoute),
-        child: Padding(
-          padding: const EdgeInsets.only(right: 30),
+        child: Center(
           child: RichText(
               text: TextSpan(children: [
             TextSpan(
-                text: ' هل لديك حساب بالفعل؟',
+                text: AppLocalization.haveAccountMsg,
                 style: TextStyle(
                     color: AppColors.black,
                     fontWeight: FontWeight.w500,
                     fontSize: 17)),
             TextSpan(
-                text: 'تسجيل الدخول',
+                text: AppLocalization.login,
                 style: TextStyle(
                     color: AppColors.button,
                     fontWeight: FontWeight.w500,
@@ -347,14 +347,19 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Text(city, overflow: TextOverflow.ellipsis), value: city);
       dropDownItems.add(newItem);
     }
-    return DropdownButton<String>(
-        elevation: 7,
-        isExpanded: true,
-        onChanged: (selectedCity) {
-          _registerController.selectedCity(selectedCity);
-        },
-        value: _registerController.city,
-        items: dropDownItems);
+    return Container(
+      decoration: BoxDecoration(
+          color: AppColors.white, borderRadius: BorderRadius.circular(5)),
+      child: DropdownButton<String>(
+          dropdownColor: Colors.white,
+          elevation: 7,
+          isExpanded: true,
+          onChanged: (selectedCity) {
+            _registerController.selectedCity(selectedCity);
+          },
+          value: _registerController.city,
+          items: dropDownItems),
+    );
   }
 
   _buildAccountTypeDropDownButton() {
@@ -365,13 +370,18 @@ class _RegisterPageState extends State<RegisterPage> {
           value: account);
       dropDownItems.add(newItem);
     }
-    return DropdownButton<String>(
-        elevation: 7,
-        isExpanded: true,
-        onChanged: (selectedType) {
-          _registerController.selectedAccountType(selectedType);
-        },
-        value: _registerController.accountType,
-        items: dropDownItems);
+    return Container(
+      decoration: BoxDecoration(
+          color: AppColors.white, borderRadius: BorderRadius.circular(5)),
+      child: DropdownButton<String>(
+          dropdownColor: Colors.white,
+          elevation: 7,
+          isExpanded: true,
+          onChanged: (selectedType) {
+            _registerController.selectedAccountType(selectedType);
+          },
+          value: _registerController.accountType,
+          items: dropDownItems),
+    );
   }
 }

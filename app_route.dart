@@ -17,6 +17,7 @@ class AppRoute {
   static const myrewardsRoute = '/myrewards';
   static const shoppingCartRoute = '/shopping-cart';
   static const ordersRoute = '/orders-page';
+  static const orderTrackRoute = '/order-track';
   static const paymentMethodRoute = '/payment-method';
   static const paymentDetailRoute = '/payment-detail';
   static const paymentCustomerInformationRoute = '/payment-customer';

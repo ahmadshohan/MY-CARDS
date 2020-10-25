@@ -1,19 +1,21 @@
 import 'package:mycarts/data/models/user.dart';
 
 class LoginModel {
-  String phoneNumber = '';
+  String fullPhoneNumber = '';
   String password = '';
+  String phoneNumber = '';
+  String countryCode = '';
 
   LoginModel();
 
   LoginModel.fromJson(Map<String, dynamic> json) {
-    phoneNumber = json['email'];
+    fullPhoneNumber = json['fullPhoneNumber'];
     password = json['password'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['email'] = this.phoneNumber;
+    data['fullPhoneNumber'] = this.fullPhoneNumber;
     data['password'] = this.password;
     return data;
   }

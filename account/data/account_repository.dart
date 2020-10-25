@@ -4,6 +4,7 @@ import 'package:mycarts/account/data/models/register.dart';
 import 'package:mycarts/data/models/result.dart';
 import 'package:mycarts/data/repository.dart';
 import 'package:dio/dio.dart';
+import 'package:mycarts/shared/localization/app_localization.dart';
 
 class AccountRepository extends Repository {
   String _path;
@@ -27,7 +28,7 @@ class AccountRepository extends Repository {
         return getError(e.response);
       else
         return Result(ResultStatus.FAIL,
-            errorMessage: " AppLocalization.someError");
+            errorMessage: AppLocalization.someError);
     }
   }
 
@@ -47,7 +48,7 @@ class AccountRepository extends Repository {
         return getError(e.response);
       else
         return Result(ResultStatus.FAIL,
-            errorMessage: "AppLocalization.someError");
+            errorMessage: AppLocalization.someError);
     }
   }
 
@@ -66,7 +67,7 @@ class AccountRepository extends Repository {
         return getError(e.response);
       else
         return Result(ResultStatus.FAIL,
-            errorMessage: "AppLocalization.someError");
+            errorMessage: AppLocalization.someError);
     }
   }
 
@@ -84,7 +85,7 @@ class AccountRepository extends Repository {
         return getError(e.response);
       else
         return Result(ResultStatus.FAIL,
-            errorMessage: " AppLocalization.someError");
+            errorMessage: AppLocalization.someError);
     }
   }
 }

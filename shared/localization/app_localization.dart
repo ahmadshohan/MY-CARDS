@@ -20,9 +20,9 @@ class AppLocalization {
 
   static get supportedLocales {
     return [
-      Locale(tr),
-      Locale(en),
       Locale(ar),
+      Locale(en),
+      Locale(tr),
     ];
   }
 
@@ -79,6 +79,12 @@ class AppLocalization {
   static get bestAlbumsWeeklyMsg => 'bestAlbumsWeeklyMsg'.tr();
   static get specialAlbumsUserMsg => 'specialAlbumsUserMsg'.tr();
   static get specialPlaylistUserMsg => 'specialPlaylistUserMsg'.tr();
+  static get notMatchPassword => 'notMatchPassword'.tr();
+  static get skip => 'skip'.tr();
+  static get selectCity => 'selectCity'.tr();
+  static get selectAccountType => 'selectAccountType'.tr();
+  static get confirmPassword => 'confirmPassword'.tr();
+  static get recovery => 'recovery'.tr();
 
   static get idNumber => 'idNumber'.tr();
 

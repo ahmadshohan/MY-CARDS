@@ -113,15 +113,19 @@ class _SingleProductCartState extends State<SingleProductCart> {
                                       InkWell(
                                           onTap: () {},
                                           child: Icon(Icons.add_shopping_cart,
-                                              size: 35)),
-                                      Icon(
-                                          widget.isWish
-                                              ? EvaIcons.gift
-                                              : EvaIcons.giftOutline,
+                                              color: AppColors.button,
+                                              size: 30)),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Image.asset(
+                                          'assets/png/dream-catcher.png',
+                                          height: 30,
+                                          width: 30,
                                           color: widget.isWish
-                                              ? Colors.red
-                                              : Colors.black,
-                                          size: 35),
+                                              ? Colors.deepOrange
+                                              : AppColors.button,
+                                        ),
+                                      ),
                                       InkWell(
                                           onTap: () async {
                                             return await _showConfirmDialog(

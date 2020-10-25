@@ -132,22 +132,22 @@ mixin _$LoginController on _LoginControllerBase, Store {
   }
 
   @override
-  String checkPhoneNumber() {
+  dynamic onCountryChange(CountryCode countryCode) {
     final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
-        name: '_LoginControllerBase.checkPhoneNumber');
+        name: '_LoginControllerBase.onCountryChange');
     try {
-      return super.checkPhoneNumber();
+      return super.onCountryChange(countryCode);
     } finally {
       _$_LoginControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  String checkEmail() {
+  String checkPhoneNumber() {
     final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
-        name: '_LoginControllerBase.checkEmail');
+        name: '_LoginControllerBase.checkPhoneNumber');
     try {
-      return super.checkEmail();
+      return super.checkPhoneNumber();
     } finally {
       _$_LoginControllerBaseActionController.endAction(_$actionInfo);
     }

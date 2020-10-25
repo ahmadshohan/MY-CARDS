@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:mycarts/account/data/account_repository.dart';
 import 'package:mycarts/account/data/models/login.dart';
 import 'package:mycarts/app_route.dart';
@@ -54,22 +55,19 @@ abstract class _LoginControllerBase with Store {
   LoginModel model = LoginModel();
 
   @action
-  String checkPhoneNumber() {
-    if (model.phoneNumber.isEmpty) return AppLocalization.phoneNumberRequired;
-    if (model.phoneNumber.length < 11)
-      return AppLocalization.phoneNumberNotValid;
-    else
-      return null;
+  onCountryChange(CountryCode countryCode) {
+    model.countryCode = countryCode.toString();
   }
 
   @action
-  String checkEmail() {
-    if (model.phoneNumber.isEmpty)
-      return "AppLocalization.emailRequired";
-    else if (EmailValidator.validate(model.phoneNumber))
+  String checkPhoneNumber() {
+    if (model.phoneNumber.isEmpty) return AppLocalization.phoneNumberRequired;
+    if (model.phoneNumber.length <= 9)
+      return AppLocalization.phoneNumberNotValid;
+    else {
+      model.fullPhoneNumber = model.countryCode + model.phoneNumber;
       return null;
-    else
-      return AppLocalization.emailNotValid;
+    }
   }
 
   @action

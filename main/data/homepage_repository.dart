@@ -2,21 +2,21 @@ import 'dart:convert';
 
 import 'package:mycarts/data/models/result.dart';
 import 'package:mycarts/data/repository.dart';
+import 'package:mycarts/main/data/models/home_page_product.dart';
 import 'package:mycarts/main/data/models/slider.dart';
 import 'package:dio/dio.dart';
+import 'package:mycarts/shared/localization/app_localization.dart';
 
-class MusicRepository extends Repository {
+class HomeRepository extends Repository {
   String _path;
 
-  MusicRepository() {
+  HomeRepository() {
     _path = '$apiUrl';
   }
 
-  Future<Result<dynamic>> getSliderHomePage(String lang) async {
+  Future<Result<dynamic>> getSliderHomePage() async {
     try {
-      final langData = jsonEncode({'lang': 'en'});
-      final response =
-          await dio.post('${_path}home_page_slider', data: langData);
+      final response = await dio.get('${_path}slider');
       if (response.statusCode == 200) {
         final data = response.data;
         return Result(ResultStatus.SUCCESS, data: SliderResult.fromJson(data));
@@ -28,29 +28,28 @@ class MusicRepository extends Repository {
         return getError(e.response);
       else
         return Result(ResultStatus.FAIL,
-            errorMessage: " AppLocalization.someError");
+            errorMessage: AppLocalization.someError);
     }
   }
 
-  // Future<Result<dynamic>> getLastAlbumsHomePage(String lang) async {
-  //   try {
-  //     final langData = jsonEncode({'lang': 'en'});
-  //     final response =
-  //         await dio.post('${_path}home_page_last_album', data: langData);
-  //     if (response.statusCode == 200) {
-  //       final data = response.data;
-  //       return Result(ResultStatus.SUCCESS, data: AlbumsResult.fromJson(data));
-  //     } else
-  //       return getError(response);
-  //   } catch (e) {
-  //     print(e);
-  //     if (e is DioError)
-  //       return getError(e.response);
-  //     else
-  //       return Result(ResultStatus.FAIL,
-  //           errorMessage: AppLocalization.someError);
-  //   }
-  // }
+  Future<Result<dynamic>> getProductsHomePage() async {
+    try {
+      final response = await dio.get('${_path}products_home_page');
+      if (response.statusCode == 200) {
+        final data = response.data;
+        return Result(ResultStatus.SUCCESS,
+            data: HomePageProductsResult.fromJson(data));
+      } else
+        return getError(response);
+    } catch (e) {
+      print(e);
+      if (e is DioError)
+        return getError(e.response);
+      else
+        return Result(ResultStatus.FAIL,
+            errorMessage: AppLocalization.someError);
+    }
+  }
   //
   // Future<Result<dynamic>> getBestSongsHomePage(String lang) async {
   //   try {

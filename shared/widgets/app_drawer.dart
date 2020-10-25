@@ -14,84 +14,91 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: Column(children: <Widget>[
-      Container(
-          height: MediaQuery.of(context).size.height * 0.2,
-          width: double.infinity,
-          decoration: BoxDecoration(color: AppColors.drawerHeader),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            CircleAvatar(
-                radius: 50,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.asset('assets/png/avatar.png',
-                        fit: BoxFit.cover))),
-            Text(AppLocalization.yourName,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: AppColors.white))
-          ])),
-      Expanded(
+      child: Column(children: <Widget>[
+        Expanded(
+          flex: 1,
           child: Container(
               width: double.infinity,
-              decoration: BoxDecoration(color: AppColors.drawerBody),
-              child: Column(children: [
-                _buildMainMenu(),
-                Divider(
-                    height: 0.9,
-                    color: AppColors.white,
-                    indent: 10,
-                    endIndent: 10),
-                _buildMyShoppingCart(),
-                Divider(
-                    height: 0.9,
-                    color: AppColors.white,
-                    indent: 10,
-                    endIndent: 10),
-                _buildFavorite(),
-                Divider(
-                    height: 0.9,
-                    color: AppColors.white,
-                    indent: 10,
-                    endIndent: 10),
-                _buildWishes(),
-                Divider(
-                    height: 0.9,
-                    color: AppColors.white,
-                    indent: 10,
-                    endIndent: 10),
-                _buildEvaluation(),
-                Divider(
-                    height: 0.9,
-                    color: AppColors.white,
-                    indent: 10,
-                    endIndent: 10),
-                _buildMessageUs(),
-                Divider(
-                    height: 0.9,
-                    color: AppColors.white,
-                    indent: 10,
-                    endIndent: 10),
-                _buildComplaints(),
-                Divider(
-                    height: 0.9,
-                    color: AppColors.white,
-                    indent: 10,
-                    endIndent: 10),
-                _buildMyRewards(),
-                Divider(
-                    height: 0.9,
-                    color: AppColors.white,
-                    indent: 10,
-                    endIndent: 10),
-                _buildAccount(),
-                Divider(
-                    height: 0.9,
-                    color: AppColors.white,
-                    indent: 10,
-                    endIndent: 10),
-                _buildAbout()
-              ])))
-    ]));
+              padding: const EdgeInsets.only(top: 20),
+              decoration: BoxDecoration(color: AppColors.drawerHeader),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                        radius: 50,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset('assets/png/avatar.png',
+                                fit: BoxFit.cover))),
+                    Text(AppLocalization.yourName,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: AppColors.white))
+                  ])),
+        ),
+        Expanded(
+            flex: 3,
+            child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(color: AppColors.drawerBody),
+                child: Column(children: [
+                  _buildMainMenu(),
+                  Divider(
+                      height: 0.9,
+                      color: AppColors.white,
+                      indent: 10,
+                      endIndent: 10),
+                  _buildMyShoppingCart(),
+                  Divider(
+                      height: 0.9,
+                      color: AppColors.white,
+                      indent: 10,
+                      endIndent: 10),
+                  _buildFavorite(),
+                  Divider(
+                      height: 0.9,
+                      color: AppColors.white,
+                      indent: 10,
+                      endIndent: 10),
+                  _buildWishes(),
+                  Divider(
+                      height: 0.9,
+                      color: AppColors.white,
+                      indent: 10,
+                      endIndent: 10),
+                  _buildEvaluation(),
+                  Divider(
+                      height: 0.9,
+                      color: AppColors.white,
+                      indent: 10,
+                      endIndent: 10),
+                  _buildMessageUs(),
+                  Divider(
+                      height: 0.9,
+                      color: AppColors.white,
+                      indent: 10,
+                      endIndent: 10),
+                  _buildComplaints(),
+                  Divider(
+                      height: 0.9,
+                      color: AppColors.white,
+                      indent: 10,
+                      endIndent: 10),
+                  _buildMyRewards(),
+                  Divider(
+                      height: 0.9,
+                      color: AppColors.white,
+                      indent: 10,
+                      endIndent: 10),
+                  _buildAccount(),
+                  Divider(
+                      height: 0.9,
+                      color: AppColors.white,
+                      indent: 10,
+                      endIndent: 10),
+                  _buildAbout()
+                ])))
+      ]),
+    );
   }
 
   _buildMainMenu() {

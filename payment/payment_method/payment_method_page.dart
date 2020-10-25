@@ -90,7 +90,7 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
                       title: ListTile(
                         title: Row(children: [
                           Icon(Icons.satellite, color: AppColors.black),
-                          Text(' خدمات',
+                          Text(' الدفع المصرفي',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 19))
                         ]),

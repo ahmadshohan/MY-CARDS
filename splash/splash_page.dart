@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
     return Container(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width / 4),
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: BoxDecoration(color: AppColors.appBg),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

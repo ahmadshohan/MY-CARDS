@@ -1,3 +1,4 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mycarts/shared/search/app_search.dart';
@@ -92,8 +93,41 @@ class _ProductDetailsState extends State<ProductDetails> {
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.29,
           child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(loadedProduct.image, fit: BoxFit.cover)),
+            borderRadius: BorderRadius.circular(10),
+            child: Carousel(
+                images: [
+                  Image.asset(loadedProduct.image,
+                      fit: BoxFit.fill, filterQuality: FilterQuality.high),
+                  Image.asset(loadedProduct.image,
+                      fit: BoxFit.fill, filterQuality: FilterQuality.high),
+                  Image.asset(loadedProduct.image,
+                      fit: BoxFit.fill, filterQuality: FilterQuality.high),
+                ],
+                // images: _controller.sliderData
+                //     .map((slider) => GestureDetector(
+                //         onTap: () => Navigator.of(context).pushNamed(
+                //             AppRoute.musicPlayerRoute,
+                //             arguments: slider),
+                //         child: slider.contents?.avatar1 != null
+                //             ? CachedNetworkImage(
+                //                 imageUrl:
+                //                     "${SocialMedia.urlPrefix + slider.contents.avatar1}")
+                //             : AssetImage("assets/png/temp_news.png")
+                // CachedNetworkImage(
+                //     imageUrl:
+                //     'https://cdn-images-1.medium.com/max/2000/1*wnIEgP1gNMrK5gZU7QS0-A.jpeg'),
+                // ExactAssetImage("assets/page_design/home_page.jpeg"),
+                // ))
+                // .toList(),
+                dotSize: 4.0,
+                dotSpacing: 15.0,
+                dotColor: AppColors.button,
+                dotPosition: DotPosition.bottomCenter,
+                indicatorBgPadding: 5.0,
+                borderRadius: true,
+                moveIndicatorFromBottom: 180.0,
+                noRadiusForIndicator: true),
+          ),
         ));
   }
 
@@ -115,11 +149,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF3C3C3C))),
                 Spacer(),
+                Image.asset(
+                  'assets/png/dream-catcher.png',
+                  height: 30,
+                  width: 30,
+                ),
                 Icon(EvaIcons.star, color: AppColors.button),
-                Icon(EvaIcons.gift, color: AppColors.button)
               ]),
               Row(children: [
-                Text('تقييم المشتركين للبطاقة ',
+                Text('تقييم الزبائن للمنتج ',
                     textAlign: TextAlign.right,
                     maxLines: 1,
                     style: TextStyle(

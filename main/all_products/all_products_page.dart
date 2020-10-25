@@ -30,6 +30,7 @@ class _AllProductsPageState extends State<AllProductsPage> {
     final products = productsData.productsList;
     final arguments = ModalRoute.of(context).settings.arguments as Map;
     final title = arguments['title'];
+    // final prodList = arguments['prodList'];
     return Scaffold(
         key: _key,
         appBar: AppBar(

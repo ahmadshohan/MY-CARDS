@@ -97,21 +97,23 @@ class _SingleProductHorizentalState extends State<SingleProductHorizental> {
                                                       onPressed: () {
                                                         product
                                                             .removeSingleItem(
-                                                          singleProduct.id,
-                                                        );
+                                                                singleProduct
+                                                                    .id);
                                                       },
                                                     )));
                                           },
-                                          child: Icon(Icons.add_shopping_cart)),
+                                          child: Icon(Icons.add_shopping_cart,
+                                              color: AppColors.button)),
                                       InkWell(
                                         onTap: () {},
-                                        child: Icon(
-                                            singleProduct.isWish
-                                                ? EvaIcons.gift
-                                                : EvaIcons.giftOutline,
-                                            color: singleProduct.isWish
-                                                ? Colors.red
-                                                : Colors.black),
+                                        child: Image.asset(
+                                          'assets/png/dream-catcher.png',
+                                          height: 30,
+                                          width: 30,
+                                          color: singleProduct.isWish
+                                              ? Colors.deepOrange
+                                              : AppColors.button,
+                                        ),
                                       ),
                                       InkWell(
                                           onTap: () {

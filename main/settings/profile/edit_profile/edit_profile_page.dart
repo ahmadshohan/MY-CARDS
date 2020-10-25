@@ -125,7 +125,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         onFieldSubmitted: (_) => KeyBoard.close(context),
         decoration: InputDecoration(
             labelText: AppLocalization.yourName,
-            fillColor: Colors.white30,
+            fillColor: Colors.white,
             filled: true,
             labelStyle: TextStyle(color: AppColors.black),
             contentPadding: EdgeInsets.all(16),
@@ -142,7 +142,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
             labelText: AppLocalization.phoneNumber,
             filled: true,
-            fillColor: Colors.white30,
+            fillColor: Colors.white,
             labelStyle: TextStyle(color: AppColors.black),
             contentPadding: EdgeInsets.all(16),
             border: OutlineInputBorder(
@@ -158,7 +158,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         onFieldSubmitted: (_) => KeyBoard.close(context),
         decoration: InputDecoration(
             labelText: AppLocalization.email,
-            fillColor: Colors.white30,
+            fillColor: Colors.white,
             filled: true,
             labelStyle: TextStyle(color: AppColors.black),
             contentPadding: EdgeInsets.all(16),
@@ -177,7 +177,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           onFieldSubmitted: (_) => KeyBoard.close(context),
           decoration: InputDecoration(
               labelText: AppLocalization.password,
-              fillColor: Colors.white30,
+              fillColor: Colors.white,
               filled: true,
               labelStyle: TextStyle(color: AppColors.black),
               suffixIcon: GestureDetector(
@@ -203,7 +203,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           onFieldSubmitted: (_) => KeyBoard.close(context),
           decoration: InputDecoration(
               labelText: 'تأكيد كلمة المرور',
-              fillColor: Colors.white30,
+              fillColor: Colors.white,
               filled: true,
               labelStyle: TextStyle(color: AppColors.black),
               suffixIcon: GestureDetector(
@@ -231,14 +231,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('المحافظة', style: TextStyle(color: Colors.black, fontSize: 17)),
-        DropdownButton<String>(
-            isExpanded: true,
-            elevation: 7,
-            onChanged: (selectedCity) {
-              _editProfileController.selectedCity(selectedCity);
-            },
-            value: _editProfileController.city,
-            items: dropDownItems),
+        Container(
+          decoration: BoxDecoration(
+              color: AppColors.white, borderRadius: BorderRadius.circular(10)),
+          child: DropdownButton<String>(
+              dropdownColor: AppColors.white,
+              isExpanded: true,
+              elevation: 7,
+              onChanged: (selectedCity) {
+                _editProfileController.selectedCity(selectedCity);
+              },
+              value: _editProfileController.city,
+              items: dropDownItems),
+        ),
       ],
     );
   }

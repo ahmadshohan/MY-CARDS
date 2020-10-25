@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:mycarts/about/about_page.dart';
 import 'package:mycarts/complaints/complaints_page.dart';
 import 'package:mycarts/main/all_products/all_products_page.dart';
+import 'package:mycarts/main/settings/orders/order_track/order_track_page.dart';
 import 'package:mycarts/message_us/message_us_page.dart';
 import 'package:mycarts/rate_us/rate_us_page.dart';
 import 'package:mycarts/wishes/wishes_page.dart';
@@ -42,7 +43,7 @@ class MyCartsAppState extends State<MyCartsApp> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: AppColors.navigationBar,
-        statusBarColor: Colors.transparent,
+        statusBarColor: AppColors.button,
         systemNavigationBarIconBrightness: Brightness.light,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark));
@@ -59,7 +60,8 @@ class MyCartsAppState extends State<MyCartsApp> {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
                 primaryColor: AppColors.button,
-                canvasColor: AppColors.bg,
+                scaffoldBackgroundColor: AppColors.appBg,
+                canvasColor: AppColors.appBg,
                 appBarTheme: Theme.of(context).appBarTheme.copyWith(
                     color: AppColors.playerGradientLow,
                     iconTheme: IconThemeData(color: Colors.white)),
@@ -84,6 +86,7 @@ class MyCartsAppState extends State<MyCartsApp> {
               AppRoute.myrewardsRoute: (ctx) => MyRewardsPage(),
               AppRoute.shoppingCartRoute: (ctx) => ShoppingCartPage(),
               AppRoute.ordersRoute: (ctx) => OrdersPage(),
+              AppRoute.orderTrackRoute: (ctx) => OrderTrackPage(),
               AppRoute.paymentMethodRoute: (ctx) => PaymentMethodPage(),
               AppRoute.paymentDetailRoute: (ctx) => PaymentDetailPage(),
               AppRoute.paymentCustomerInformationRoute: (ctx) =>

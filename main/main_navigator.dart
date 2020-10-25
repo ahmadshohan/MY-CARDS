@@ -28,12 +28,12 @@ class _MainNavigatorState extends State<MainNavigator> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: AppColors.button,
         statusBarBrightness: Theme.of(context).brightness == Brightness.dark
             ? Brightness.dark
             : Brightness.light));
     return Scaffold(
-        backgroundColor: AppColors.white,
+        backgroundColor: AppColors.appBg,
         body: _buildPageViewBuilder(),
         bottomNavigationBar: Container(
             child: Column(

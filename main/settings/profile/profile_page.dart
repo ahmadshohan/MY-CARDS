@@ -78,7 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
         style: TextStyle(color: AppColors.black),
         decoration: InputDecoration(
             labelText: AppLocalization.yourName,
-            fillColor: Colors.white30,
+            fillColor: Colors.white,
             filled: true,
             labelStyle: TextStyle(color: AppColors.black),
             contentPadding: EdgeInsets.all(16),
@@ -95,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
         style: TextStyle(color: AppColors.black),
         decoration: InputDecoration(
             labelText: AppLocalization.email,
-            fillColor: Colors.white30,
+            fillColor: Colors.white,
             filled: true,
             labelStyle: TextStyle(color: AppColors.black),
             contentPadding: EdgeInsets.all(16),
@@ -114,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
         decoration: InputDecoration(
             labelText: AppLocalization.phoneNumber,
             filled: true,
-            fillColor: Colors.white30,
+            fillColor: Colors.white,
             labelStyle: TextStyle(color: AppColors.black),
             contentPadding: EdgeInsets.all(16),
             disabledBorder: OutlineInputBorder(
@@ -133,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
             labelText: 'المحافظة',
             suffixIcon: Icon(Icons.arrow_drop_down, color: AppColors.black),
             filled: true,
-            fillColor: Colors.white30,
+            fillColor: Colors.white,
             labelStyle: TextStyle(color: AppColors.black),
             contentPadding: EdgeInsets.all(16),
             disabledBorder: OutlineInputBorder(
@@ -150,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
         style: TextStyle(color: AppColors.black),
         decoration: InputDecoration(
             labelText: AppLocalization.password,
-            fillColor: Colors.white30,
+            fillColor: Colors.white,
             filled: true,
             labelStyle: TextStyle(color: AppColors.black),
             contentPadding: EdgeInsets.all(16),

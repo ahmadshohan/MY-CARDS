@@ -1,23 +1,16 @@
 class User {
-  dynamic id;
+  int id;
   String name;
   String email;
   dynamic emailVerifiedAt;
   int role;
-  dynamic avatar;
+  String avatar;
+  int balance;
   String createdAt;
   String updatedAt;
-  dynamic gender;
-  dynamic username;
-  dynamic typeLogin;
-  dynamic otherId;
-  String phone;
-  dynamic gun;
-  dynamic ay;
-  dynamic yil;
-  dynamic token;
+  dynamic minOrder;
+  dynamic commission;
   int active;
-  dynamic country;
 
   User(
       {this.id,
@@ -26,19 +19,12 @@ class User {
       this.emailVerifiedAt,
       this.role,
       this.avatar,
+      this.balance,
       this.createdAt,
       this.updatedAt,
-      this.gender,
-      this.username,
-      this.typeLogin,
-      this.otherId,
-      this.phone,
-      this.gun,
-      this.ay,
-      this.yil,
-      this.token,
-      this.active,
-      this.country});
+      this.minOrder,
+      this.commission,
+      this.active});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -47,19 +33,12 @@ class User {
     emailVerifiedAt = json['email_verified_at'];
     role = json['role'];
     avatar = json['avatar'];
+    balance = json['balance'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    gender = json['gender'];
-    username = json['username'];
-    typeLogin = json['type_login'];
-    otherId = json['other_id'];
-    phone = json['phone'];
-    gun = json['gun'];
-    ay = json['ay'];
-    yil = json['yil'];
-    token = json['token'];
+    minOrder = json['min_order'];
+    commission = json['commission'];
     active = json['active'];
-    country = json['country'];
   }
 
   Map<String, dynamic> toJson() {
@@ -70,19 +49,12 @@ class User {
     data['email_verified_at'] = this.emailVerifiedAt;
     data['role'] = this.role;
     data['avatar'] = this.avatar;
+    data['balance'] = this.balance;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['gender'] = this.gender;
-    data['username'] = this.username;
-    data['type_login'] = this.typeLogin;
-    data['other_id'] = this.otherId;
-    data['phone'] = this.phone;
-    data['gun'] = this.gun;
-    data['ay'] = this.ay;
-    data['yil'] = this.yil;
-    data['token'] = this.token;
+    data['min_order'] = this.minOrder;
+    data['commission'] = this.commission;
     data['active'] = this.active;
-    data['country'] = this.country;
     return data;
   }
 }

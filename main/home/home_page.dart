@@ -1,9 +1,12 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/shared/search/app_search.dart';
+import 'package:mycarts/shared/widgets/main__page_single_product.dart';
 import 'package:provider/provider.dart';
 import 'package:mycarts/shared/widgets/app_drawer.dart';
 import 'package:mycarts/colors.dart';
@@ -23,8 +26,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Future<void>.delayed(Duration(milliseconds: 1000), () async {});
-    // _controller.sliderHomePage();
+    Future<void>.delayed(Duration(milliseconds: 1000), () async {
+      _controller.productsHomePage();
+    });
   }
 
   @override
@@ -47,15 +51,15 @@ class _HomePageState extends State<HomePage> {
                           children: <Widget>[
                         _buildHomeBar(),
                         SizedBox(height: 12),
-                        _buildNewProductHorizontalList(),
+                        _buildNewProductHorizontalList(products),
                         SizedBox(height: 12),
-                        _buildSpecialOfferHorizontalList(),
+                        _buildSpecialOfferHorizontalList(products),
                         SizedBox(height: 12),
-                        _buildGamesPlatformsHorizontalList(),
+                        _buildGamesPlatformsHorizontalList(products),
                         SizedBox(height: 12),
-                        _buildNewProductHorizontalList(),
+                        _buildNewProductHorizontalList(products),
                         SizedBox(height: 12),
-                        _buildNewProductHorizontalList(),
+                        _buildNewProductHorizontalList(products),
                       ])),
                   Visibility(
                       visible: _controller.loading,
@@ -95,16 +99,53 @@ class _HomePageState extends State<HomePage> {
                 left: 10,
                 height: MediaQuery.of(context).size.height * 0.19,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      'assets/jpg/pubg.jpg',
-                      fit: BoxFit.cover,
-                    )))
+                  borderRadius: BorderRadius.circular(10),
+                  child: Carousel(
+                      images: [
+                        Image.asset("assets/png/Mask.png",
+                            fit: BoxFit.fill,
+                            filterQuality: FilterQuality.high),
+                        Image.asset("assets/png/Mask.png",
+                            fit: BoxFit.fill,
+                            filterQuality: FilterQuality.high),
+                        Image.asset("assets/png/home-slider.png",
+                            fit: BoxFit.fill,
+                            filterQuality: FilterQuality.high),
+                        Image.asset("assets/png/home-slider.png",
+                            fit: BoxFit.fill, filterQuality: FilterQuality.high)
+                      ],
+                      // images: _controller.sliderData
+                      //     .map((slider) => GestureDetector(
+                      //         onTap: () => Navigator.of(context).pushNamed(
+                      //             AppRoute.musicPlayerRoute,
+                      //             arguments: slider),
+                      //         child: slider.contents?.avatar1 != null
+                      //             ? CachedNetworkImage(
+                      //                 imageUrl:
+                      //                     "${SocialMedia.urlPrefix + slider.contents.avatar1}")
+                      //             : AssetImage("assets/png/temp_news.png")
+                      // CachedNetworkImage(
+                      //     imageUrl:
+                      //     'https://cdn-images-1.medium.com/max/2000/1*wnIEgP1gNMrK5gZU7QS0-A.jpeg'),
+                      // ExactAssetImage("assets/page_design/home_page.jpeg"),
+                      // ))
+                      // .toList(),
+                      dotSize: 4.0,
+                      dotSpacing: 15.0,
+                      dotColor: AppColors.button,
+                      dotPosition: DotPosition.bottomCenter,
+                      indicatorBgPadding: 5.0,
+                      borderRadius: true,
+                      moveIndicatorFromBottom: 180.0,
+                      noRadiusForIndicator: true),
+                ))
           ]),
         ));
   }
 
-  _buildNewProductHorizontalList() {
+  _buildNewProductHorizontalList(List<Product> products) {
+    final newProducts =
+        products.where((prod) => prod.category == 'bitmap').toList();
     return Container(
         height: MediaQuery.of(context).size.height * 0.2,
         padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -112,41 +153,31 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text("اخر المنتجات", style: TextStyle(color: AppColors.black)),
+              Text("جديد المنتجات",
+                  style: TextStyle(color: AppColors.black, fontSize: 15)),
               InkWell(
                   onTap: () => Navigator.pushNamed(
                       context, AppRoute.allProductsRoute,
                       arguments: {'title': 'اخر المنتجات'}),
                   child: Text("رؤية الكل",
-                      style: TextStyle(color: AppColors.button)))
+                      style: TextStyle(color: AppColors.button, fontSize: 14)))
             ]),
             Expanded(
                 child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (ctx, index) => InkWell(
-                  onTap: () {},
-                  child: Container(
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Column(children: [
-                        Expanded(
-                          child: Image.asset('assets/jpg/pubg.jpg',
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              fit: BoxFit.cover),
-                        ),
-                        Text("الأكثر مبيعا ",
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 12))
-                      ]))),
-            ))
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: newProducts.length,
+                    itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+                        value: newProducts[index],
+                        child: SingleProductMainPage())))
           ],
         ));
   }
 
-  _buildSpecialOfferHorizontalList() {
+  _buildSpecialOfferHorizontalList(List<Product> products) {
+    final newProducts =
+        products.where((prod) => prod.category == 'bitmap').toList();
+    final reversedProducts = newProducts.reversed.toList();
     return Container(
         height: MediaQuery.of(context).size.height * 0.2,
         padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -155,40 +186,29 @@ class _HomePageState extends State<HomePage> {
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text("عروض خاصة",
-                  style: TextStyle(color: AppColors.black, fontSize: 17)),
+                  style: TextStyle(color: AppColors.black, fontSize: 15)),
               InkWell(
                   onTap: () => Navigator.pushNamed(
                       context, AppRoute.allProductsRoute,
                       arguments: {'title': ' عروض خاصة'}),
                   child: Text("رؤية الكل",
-                      style: TextStyle(color: AppColors.button)))
+                      style: TextStyle(color: AppColors.button, fontSize: 14)))
             ]),
             Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    itemBuilder: (ctx, index) => InkWell(
-                        onTap: () {},
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.35,
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Column(children: [
-                              Expanded(
-                                  child: Image.asset('assets/jpg/pubg.jpg',
-                                      width: MediaQuery.of(context).size.width *
-                                          0.35,
-                                      fit: BoxFit.cover)),
-                              Text("الأكثر مبيعا ",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 12))
-                            ])))))
+                    itemCount: reversedProducts.length,
+                    itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+                        value: reversedProducts[index],
+                        child: SingleProductMainPage())))
           ],
         ));
   }
 
-  _buildGamesPlatformsHorizontalList() {
+  _buildGamesPlatformsHorizontalList(List<Product> products) {
+    final gameProducts =
+        products.where((prod) => prod.category == 'pubg').toList();
     return Container(
         height: MediaQuery.of(context).size.height * 0.2,
         padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -197,36 +217,24 @@ class _HomePageState extends State<HomePage> {
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text(" منصات العاب",
-                  style: TextStyle(color: AppColors.black, fontSize: 17)),
+                  style: TextStyle(color: AppColors.black, fontSize: 15)),
               InkWell(
                   onTap: () => Navigator.pushNamed(
-                      context, AppRoute.allProductsRoute,
-                      arguments: {'title': ' منصات العاب'}),
+                          context, AppRoute.allProductsRoute, arguments: {
+                        'title': ' منصات العاب',
+                        // 'prodList': _controller.homePageGamesProductsList
+                      }),
                   child: Text("رؤية الكل",
-                      style: TextStyle(color: AppColors.button)))
+                      style: TextStyle(color: AppColors.button, fontSize: 14)))
             ]),
             Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    itemBuilder: (ctx, index) => InkWell(
-                        onTap: () {},
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.35,
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Column(children: [
-                              Expanded(
-                                  child: Image.asset(
-                                      "assets/jpg/playstation.jpg",
-                                      width: MediaQuery.of(context).size.width *
-                                          0.35,
-                                      fit: BoxFit.cover)),
-                              Text("الأكثر مبيعا ",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 12))
-                            ])))))
+                    itemCount: gameProducts.length,
+                    itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+                        value: gameProducts[index],
+                        child: SingleProductMainPage())))
           ],
         ));
   }

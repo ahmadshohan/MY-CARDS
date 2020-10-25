@@ -1,4 +1,6 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mycarts/account/login/login_controller.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/colors.dart';
 import 'package:mycarts/shared/localization/app_localization.dart';
@@ -8,8 +10,6 @@ import 'package:mycarts/shared/widgets/loader.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -107,27 +107,52 @@ class _LoginPageState extends State<LoginPage> {
                 fontWeight: FontWeight.bold)),
       ),
       SizedBox(height: 10),
-      TextFormField(
-          textDirection: TextDirection.rtl,
-          keyboardType: TextInputType.phone,
-          onChanged: (value) => _loginController.model.phoneNumber = value,
-          validator: (_) => _loginController.checkPhoneNumber(),
-          style: TextStyle(color: AppColors.black),
-          textInputAction: TextInputAction.next,
-          focusNode: _phoneNumberFocusNode,
-          onFieldSubmitted: (_) {
-            FocusScope.of(context).requestFocus(_passwordFocusNode);
-          },
-          decoration: InputDecoration(
-              labelText: 'رقم الهاتف',
-              suffixIcon: Icon(EvaIcons.phone),
-              fillColor: Colors.white10,
-              filled: true,
-              labelStyle: TextStyle(color: AppColors.black),
-              contentPadding: EdgeInsets.all(16),
-              border: OutlineInputBorder(
-                borderRadius: new BorderRadius.circular(10),
-              ))),
+      Row(
+        children: [
+          Expanded(
+              flex: 1,
+              child: Row(children: [
+                Expanded(
+                    child: CountryCodePicker(
+                        initialSelection: 'LY',
+                        favorite: ['+963', 'SY', '+39', 'FR'],
+                        onChanged: _loginController.onCountryChange,
+                        showFlag: true,
+                        showOnlyCountryWhenClosed: false,
+                        showCountryOnly: false,
+                        flagWidth: 50,
+                        textOverflow: TextOverflow.ellipsis,
+                        hideMainText: true,
+                        closeIcon: Icon(Icons.close, color: Colors.black),
+                        searchDecoration: InputDecoration(
+                          hintText: AppLocalization.search,
+                        ))),
+                Icon(Icons.arrow_drop_down, color: Colors.black)
+              ])),
+          Expanded(
+            flex: 3,
+            child: TextFormField(
+                keyboardType: TextInputType.numberWithOptions(),
+                textInputAction: TextInputAction.next,
+                focusNode: _phoneNumberFocusNode,
+                onChanged: (value) =>
+                    _loginController.model.phoneNumber = value,
+                validator: (_) => _loginController.checkPhoneNumber(),
+                onFieldSubmitted: (_) => KeyBoard.close(context),
+                style: TextStyle(color: AppColors.black),
+                decoration: InputDecoration(
+                    labelText: AppLocalization.phoneNumber,
+                    suffixIcon: Icon(EvaIcons.phone, color: Colors.grey),
+                    fillColor: Colors.white,
+                    filled: true,
+                    labelStyle: TextStyle(color: AppColors.black),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(10),
+                    ))),
+          ),
+        ],
+      ),
       SizedBox(height: 10),
       Observer(
         builder: (_) => TextFormField(
@@ -139,8 +164,8 @@ class _LoginPageState extends State<LoginPage> {
             validator: (_) => _loginController.checkPassword(),
             onFieldSubmitted: (_) => KeyBoard.close(context),
             decoration: InputDecoration(
-                labelText: 'كلمة المرور',
-                fillColor: Colors.white10,
+                labelText: AppLocalization.password,
+                fillColor: Colors.white,
                 filled: true,
                 labelStyle: TextStyle(color: AppColors.black),
                 contentPadding: EdgeInsets.all(16),
@@ -172,50 +197,54 @@ class _LoginPageState extends State<LoginPage> {
             //   } else
             //     _loginController.autoValidate = true;
             // },
-            text: "دخول"));
+            text: AppLocalization.login));
   }
 
   _buildForgotPassword() {
     return GestureDetector(
         onTap: () => Navigator.pushReplacementNamed(
             context, AppRoute.forgotPasswordRoute),
-        child: RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "نسيت كلمة المرور؟",
-              style: TextStyle(
-                  color: AppColors.black,
+        child: Center(
+          child: RichText(
+              text: TextSpan(children: [
+            TextSpan(
+                text: AppLocalization.forgotPassword,
+                style: TextStyle(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 19)),
+            TextSpan(
+                text: AppLocalization.recovery,
+                style: TextStyle(
+                  color: AppColors.button,
                   fontWeight: FontWeight.w500,
-                  fontSize: 19)),
-          TextSpan(
-              text: "استعادة",
-              style: TextStyle(
-                color: AppColors.button,
-                fontWeight: FontWeight.w500,
-                fontSize: 19,
-              ))
-        ])));
+                  fontSize: 19,
+                ))
+          ])),
+        ));
   }
 
   _buildDontHaveAccount() {
     return GestureDetector(
         onTap: () =>
             Navigator.pushReplacementNamed(context, AppRoute.registerRoute),
-        child: RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "ليس لديك حساب؟",
-              style: TextStyle(
-                  color: AppColors.black,
+        child: Center(
+          child: RichText(
+              text: TextSpan(children: [
+            TextSpan(
+                text: AppLocalization.noAccountMsg,
+                style: TextStyle(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 19)),
+            TextSpan(
+                text: AppLocalization.register,
+                style: TextStyle(
+                  color: AppColors.button,
                   fontWeight: FontWeight.w500,
-                  fontSize: 19)),
-          TextSpan(
-              text: "حساب جديد ",
-              style: TextStyle(
-                color: AppColors.button,
-                fontWeight: FontWeight.w500,
-                fontSize: 19,
-              ))
-        ])));
+                  fontSize: 19,
+                ))
+          ])),
+        ));
   }
 }

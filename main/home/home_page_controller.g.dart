@@ -24,6 +24,40 @@ mixin _$HomePageController on _HomePageControllerBase, Store {
     });
   }
 
+  final _$homePageCategoryListAtom =
+      Atom(name: '_HomePageControllerBase.homePageCategoryList');
+
+  @override
+  List<Category> get homePageCategoryList {
+    _$homePageCategoryListAtom.reportRead();
+    return super.homePageCategoryList;
+  }
+
+  @override
+  set homePageCategoryList(List<Category> value) {
+    _$homePageCategoryListAtom.reportWrite(value, super.homePageCategoryList,
+        () {
+      super.homePageCategoryList = value;
+    });
+  }
+
+  final _$homePageGamesProductsListAtom =
+      Atom(name: '_HomePageControllerBase.homePageGamesProductsList');
+
+  @override
+  List<ProductModel> get homePageGamesProductsList {
+    _$homePageGamesProductsListAtom.reportRead();
+    return super.homePageGamesProductsList;
+  }
+
+  @override
+  set homePageGamesProductsList(List<ProductModel> value) {
+    _$homePageGamesProductsListAtom
+        .reportWrite(value, super.homePageGamesProductsList, () {
+      super.homePageGamesProductsList = value;
+    });
+  }
+
   final _$loadingAtom = Atom(name: '_HomePageControllerBase.loading');
 
   @override
@@ -54,28 +88,30 @@ mixin _$HomePageController on _HomePageControllerBase, Store {
     });
   }
 
-  final _$autoValidateAtom = Atom(name: '_HomePageControllerBase.autoValidate');
+  final _$sliderHomePageAsyncAction =
+      AsyncAction('_HomePageControllerBase.sliderHomePage');
 
   @override
-  bool get autoValidate {
-    _$autoValidateAtom.reportRead();
-    return super.autoValidate;
+  Future<List<Slider>> sliderHomePage() {
+    return _$sliderHomePageAsyncAction.run(() => super.sliderHomePage());
   }
 
+  final _$productsHomePageAsyncAction =
+      AsyncAction('_HomePageControllerBase.productsHomePage');
+
   @override
-  set autoValidate(bool value) {
-    _$autoValidateAtom.reportWrite(value, super.autoValidate, () {
-      super.autoValidate = value;
-    });
+  Future<List<ProductModel>> productsHomePage() {
+    return _$productsHomePageAsyncAction.run(() => super.productsHomePage());
   }
 
   @override
   String toString() {
     return '''
 sliderData: ${sliderData},
+homePageCategoryList: ${homePageCategoryList},
+homePageGamesProductsList: ${homePageGamesProductsList},
 loading: ${loading},
-isFavorite: ${isFavorite},
-autoValidate: ${autoValidate}
+isFavorite: ${isFavorite}
     ''';
   }
 }

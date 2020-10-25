@@ -44,7 +44,7 @@ abstract class _RegisterControllerBase with Store {
   String city = 'كركوك';
 
   @observable
-  String accountType = 'تجاري';
+  String accountType = 'زبون';
 
   @observable
   bool showPassword = false;
@@ -102,7 +102,7 @@ abstract class _RegisterControllerBase with Store {
   String checkMatchPassword() {
     if (model.password.isEmpty) return AppLocalization.passwordRequired;
     if (model.password != model.passwordConfirm)
-      return "AppLocalization.passwordNotMatch";
+      return AppLocalization.notMatchPassword;
     else
       return null;
   }
@@ -110,7 +110,7 @@ abstract class _RegisterControllerBase with Store {
   @action
   String checkPhoneNumber() {
     if (model.phoneNumber.isEmpty) return AppLocalization.phoneNumberRequired;
-    if (model.phoneNumber.length < 11)
+    if (model.phoneNumber.length <= 9)
       return AppLocalization.phoneNumberNotValid;
     else {
       model.fullPhoneNumber = model.countryCode + model.phoneNumber;

@@ -9,12 +9,25 @@ class WelcomeController = _WelcomeControllerBase with _$WelcomeController;
 abstract class _WelcomeControllerBase with Store {
   PreferencesService _preferencesService = PreferencesService();
 
+  @action
   Future init() async {
     lang = await _preferencesService.lang;
     AppLocalization.langStream.listen((value) {
       lang = value;
     });
+    changeLangWord();
   }
+
+  @action
+  changeLangWord() {
+    if (lang == AppLocalization.ar)
+      selectedLang = 'AR';
+    else
+      selectedLang = 'EN';
+  }
+
+  @observable
+  String selectedLang = 'AR';
 
   @observable
   bool loading = false;

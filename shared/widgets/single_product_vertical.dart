@@ -82,28 +82,31 @@ class SingleProductVertical extends StatelessWidget {
                                                         },
                                                       )));
                                             },
-                                            child:
-                                                Icon(Icons.add_shopping_cart)),
+                                            child: Icon(Icons.add_shopping_cart,
+                                                color: AppColors.button)),
                                         InkWell(
-                                            onTap: () => singleProduct
-                                                .changeWishStatus(),
-                                            child: Icon(
-                                                singleProduct.isWish
-                                                    ? EvaIcons.gift
-                                                    : EvaIcons.giftOutline,
-                                                color: singleProduct.isWish
-                                                    ? Colors.red
-                                                    : Colors.black)),
+                                          onTap: () =>
+                                              singleProduct.changeWishStatus(),
+                                          child: Image.asset(
+                                            'assets/png/dream-catcher.png',
+                                            height: 30,
+                                            width: 30,
+                                            color: singleProduct.isWish
+                                                ? Colors.deepOrange
+                                                : AppColors.button,
+                                          ),
+                                        ),
                                         InkWell(
                                             onTap: () => singleProduct
                                                 .changeFavoriteStatus(),
                                             child: Icon(
-                                                singleProduct.isFavorite
-                                                    ? Icons.star
-                                                    : Icons.star_border,
-                                                color: singleProduct.isFavorite
-                                                    ? Colors.red
-                                                    : Colors.black))
+                                              singleProduct.isFavorite
+                                                  ? Icons.star
+                                                  : Icons.star_border,
+                                              color: singleProduct.isFavorite
+                                                  ? Colors.deepOrange
+                                                  : AppColors.button,
+                                            ))
                                       ])),
                               Expanded(
                                   flex: 1,

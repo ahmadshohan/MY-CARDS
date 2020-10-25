@@ -6,7 +6,7 @@ import 'package:dio_flutter_transformer/dio_flutter_transformer.dart';
 
 class Repository {
   Dio _dio;
-  final _baseUrl = 'http://api-ahmat.thismusic.com.tr/';
+  final _baseUrl = 'http://krotty.mizatr.com/';
   final _apiUrl = 'api/';
 
   get baseUrl {

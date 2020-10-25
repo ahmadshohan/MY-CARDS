@@ -4,6 +4,7 @@ class AppColors {
   static const white = const Color(0xffffffff);
   static const black = const Color(0xff000000);
 
+  static const appBg = const Color(0xffF8F8F8);
   static const playerGradientLow = const Color(0xff252527);
   static const playerGradientHigh = const Color(0xff060606);
   static const flexibleBarAlbumSongsGradientLow = const Color(0xff4F504A);
