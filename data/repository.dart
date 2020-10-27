@@ -8,6 +8,7 @@ class Repository {
   Dio _dio;
   final _baseUrl = 'http://krotty.mizatr.com/';
   final _apiUrl = 'api/';
+  final _settingUrl = 'upload/setting/';
 
   get baseUrl {
     return _baseUrl;
@@ -15,6 +16,10 @@ class Repository {
 
   get apiUrl {
     return '$_baseUrl$_apiUrl';
+  }
+
+  get settingUrl {
+    return '$_baseUrl$_settingUrl';
   }
 
   Dio get dio {

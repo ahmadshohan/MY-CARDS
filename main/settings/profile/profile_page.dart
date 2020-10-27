@@ -1,9 +1,11 @@
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/colors.dart';
+import 'package:mycarts/main/settings/profile/profile_controller.dart';
 import 'package:mycarts/shared/localization/app_localization.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mycarts/shared/widgets/loader.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key key}) : super(key: key);
@@ -13,6 +15,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  ProfileController _controller = ProfileController();
+
+  void initState() {
+    super.initState();
+    Future<void>.delayed(Duration(milliseconds: 1000), () async {
+      await _controller.init();
+      await _controller.profile(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,20 +34,25 @@ class _ProfilePageState extends State<ProfilePage> {
             centerTitle: true,
             title: Text(AppLocalization.profile,
                 style: TextStyle(color: Colors.white))),
-        body: SafeArea(
-            top: true,
-            bottom: true,
-            left: false,
-            right: false,
-            child: Stack(children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, bottom: 10, top: 5),
-                  child: SingleChildScrollView(
-                      child: Column(children: <Widget>[
-                    _buildPersonalInfo(),
-                  ])))
-            ])));
+        body: Observer(
+          builder: (_) => SafeArea(
+              top: true,
+              bottom: true,
+              left: false,
+              right: false,
+              child: Stack(children: <Widget>[
+                Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, bottom: 10, top: 5),
+                    child: SingleChildScrollView(
+                        child: Column(children: <Widget>[
+                      _buildPersonalInfo(),
+                    ]))),
+                Visibility(
+                    visible: _controller.loading,
+                    child: Center(child: Loader()))
+              ])),
+        ));
   }
 
   _buildAvatar() {
@@ -44,7 +61,10 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.black12,
       child: ClipRRect(
           borderRadius: BorderRadius.circular(100),
-          child: Image.asset('assets/png/avatar.png')),
+          child: _controller.profileData.avatar.isEmpty
+              ? Image.asset('assets/png/avatar.png')
+              : Image.network(
+                  "${_controller.settingPath + _controller.profileData?.avatar}")),
     );
   }
 
@@ -72,75 +92,86 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _buildName() {
-    return TextFormField(
-        initialValue: AppLocalization.yourName,
-        enabled: false,
-        style: TextStyle(color: AppColors.black),
-        decoration: InputDecoration(
-            labelText: AppLocalization.yourName,
-            fillColor: Colors.white,
-            filled: true,
-            labelStyle: TextStyle(color: AppColors.black),
-            contentPadding: EdgeInsets.all(16),
-            disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.button)),
-            border: OutlineInputBorder(
-                borderRadius: new BorderRadius.circular(5))));
+    return Observer(
+      builder: (_) => TextFormField(
+          initialValue:
+              _controller.profileData?.name ?? AppLocalization.yourName,
+          enabled: false,
+          style: TextStyle(color: AppColors.black),
+          decoration: InputDecoration(
+              labelText: AppLocalization.yourName,
+              fillColor: Colors.white,
+              filled: true,
+              labelStyle: TextStyle(color: AppColors.black),
+              contentPadding: EdgeInsets.all(16),
+              disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.button)),
+              border: OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(5)))),
+    );
   }
 
   _buildEmail() {
-    return TextFormField(
-        initialValue: AppLocalization.email,
-        enabled: false,
-        style: TextStyle(color: AppColors.black),
-        decoration: InputDecoration(
-            labelText: AppLocalization.email,
-            fillColor: Colors.white,
-            filled: true,
-            labelStyle: TextStyle(color: AppColors.black),
-            contentPadding: EdgeInsets.all(16),
-            disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.button)),
-            border: OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(5),
-            )));
+    return Observer(
+      builder: (_) => TextFormField(
+          initialValue: _controller.profileData?.email ?? AppLocalization.email,
+          enabled: false,
+          style: TextStyle(color: AppColors.black),
+          decoration: InputDecoration(
+              labelText: AppLocalization.email,
+              fillColor: Colors.white,
+              filled: true,
+              labelStyle: TextStyle(color: AppColors.black),
+              contentPadding: EdgeInsets.all(16),
+              disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.button)),
+              border: OutlineInputBorder(
+                borderRadius: new BorderRadius.circular(5),
+              ))),
+    );
   }
 
   _buildPhoneNumber() {
-    return TextFormField(
-        initialValue: AppLocalization.phoneNumber,
-        enabled: false,
-        style: TextStyle(color: AppColors.black),
-        decoration: InputDecoration(
-            labelText: AppLocalization.phoneNumber,
-            filled: true,
-            fillColor: Colors.white,
-            labelStyle: TextStyle(color: AppColors.black),
-            contentPadding: EdgeInsets.all(16),
-            disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.button)),
-            border: OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(5),
-            )));
+    return Observer(
+      builder: (_) => TextFormField(
+          initialValue:
+              _controller.profileData?.phone ?? AppLocalization.phoneNumber,
+          enabled: false,
+          style: TextStyle(color: AppColors.black),
+          decoration: InputDecoration(
+              labelText: AppLocalization.phoneNumber,
+              filled: true,
+              fillColor: Colors.white,
+              labelStyle: TextStyle(color: AppColors.black),
+              contentPadding: EdgeInsets.all(16),
+              disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.button)),
+              border: OutlineInputBorder(
+                borderRadius: new BorderRadius.circular(5),
+              ))),
+    );
   }
 
   _buildCity() {
-    return TextFormField(
-        initialValue: 'كركوك',
-        enabled: false,
-        style: TextStyle(color: AppColors.black),
-        decoration: InputDecoration(
-            labelText: 'المحافظة',
-            suffixIcon: Icon(Icons.arrow_drop_down, color: AppColors.black),
-            filled: true,
-            fillColor: Colors.white,
-            labelStyle: TextStyle(color: AppColors.black),
-            contentPadding: EdgeInsets.all(16),
-            disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.button)),
-            border: OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(5),
-            )));
+    return Observer(
+      builder: (_) => TextFormField(
+          initialValue:
+              _controller.profileData.city?.name ?? AppLocalization.selectCity,
+          enabled: false,
+          style: TextStyle(color: AppColors.black),
+          decoration: InputDecoration(
+              labelText: 'المحافظة',
+              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColors.black),
+              filled: true,
+              fillColor: Colors.white,
+              labelStyle: TextStyle(color: AppColors.black),
+              contentPadding: EdgeInsets.all(16),
+              disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.button)),
+              border: OutlineInputBorder(
+                borderRadius: new BorderRadius.circular(5),
+              ))),
+    );
   }
 
   _buildPassword() {

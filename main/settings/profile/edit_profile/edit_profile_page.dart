@@ -202,7 +202,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           obscureText: !_editProfileController.showPassword,
           onFieldSubmitted: (_) => KeyBoard.close(context),
           decoration: InputDecoration(
-              labelText: 'تأكيد كلمة المرور',
+              labelText: AppLocalization.confirmPassword,
               fillColor: Colors.white,
               filled: true,
               labelStyle: TextStyle(color: AppColors.black),
