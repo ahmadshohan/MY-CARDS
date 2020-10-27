@@ -1,3 +1,4 @@
+import 'package:mycarts/account/data/models/city.dart';
 import 'package:mycarts/account/data/models/forgotPassword.dart';
 import 'package:mycarts/account/data/models/login.dart';
 import 'package:mycarts/account/data/models/register.dart';
@@ -32,14 +33,12 @@ class AccountRepository extends Repository {
     }
   }
 
-  Future<Result<dynamic>> register(RegisterModel model) async {
+  Future<Result<dynamic>> getAllCity() async {
     try {
-      final data = model.toJson();
-      var formData = FormData.fromMap(data);
-      final response = await dio.post('${_path}register', data: formData);
+      final response = await dio.get('${_path}city');
       if (response.statusCode == 200) {
-        final data = response.data['data'];
-        return Result(ResultStatus.SUCCESS, data: LoginResult.fromJson(data));
+        final data = response.data;
+        return Result(ResultStatus.SUCCESS, data: CityResult.fromJson(data));
       } else
         return getError(response);
     } catch (e) {
@@ -59,6 +58,26 @@ class AccountRepository extends Repository {
       if (response.statusCode == 200) {
         final data = response.data;
         return Result(ResultStatus.SUCCESS);
+      } else
+        return getError(response);
+    } catch (e) {
+      print(e);
+      if (e is DioError)
+        return getError(e.response);
+      else
+        return Result(ResultStatus.FAIL,
+            errorMessage: AppLocalization.someError);
+    }
+  }
+
+  Future<Result<dynamic>> register(RegisterModel model) async {
+    try {
+      final data = model.toJson();
+      var formData = FormData.fromMap(data);
+      final response = await dio.post('${_path}register', data: formData);
+      if (response.statusCode == 200) {
+        final data = response.data['data'];
+        return Result(ResultStatus.SUCCESS, data: LoginResult.fromJson(data));
       } else
         return getError(response);
     } catch (e) {

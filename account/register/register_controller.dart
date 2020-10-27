@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:country_code_picker/country_code.dart';
 import 'package:mycarts/account/data/account_repository.dart';
+import 'package:mycarts/account/data/models/city.dart';
 import 'package:mycarts/account/data/models/login.dart';
 import 'package:mycarts/account/data/models/register.dart';
 import 'package:mycarts/app_route.dart';
@@ -24,12 +25,13 @@ abstract class _RegisterControllerBase with Store {
   Future init() async {
     lang = await _preferencesService.lang;
     autoValidate = false;
-    // accountType = 'تجاري';
-    // city = 'كركوك';
     AppLocalization.langStream.listen((value) {
       lang = value;
     });
   }
+
+  @observable
+  List<City> cityData = List();
 
   @observable
   bool loading = false;
@@ -63,6 +65,7 @@ abstract class _RegisterControllerBase with Store {
   @action
   void selectedAccountType(String selectedType) {
     accountType = selectedType;
+    model.role = selectedType;
   }
 
   @action
@@ -136,6 +139,32 @@ abstract class _RegisterControllerBase with Store {
       _preferencesService.user = jsonEncode(data.user);
       // var b = User.fromJson(jsonDecode(await _preferencesService.user));
       Navigator.pushReplacementNamed(context, AppRoute.mainRoute);
+    }
+    loading = false;
+  }
+
+  @action
+  Future<List<City>> getCitys(BuildContext context) async {
+    loading = true;
+    final result = await _accountRepository.getAllCity();
+    if (result.state == ResultStatus.FAIL)
+      Toaster.error(msg: result.errorMessage);
+    else {
+      cityData = result.data.data as List<City>;
+    }
+    loading = false;
+  }
+
+  @action
+  logout(BuildContext context) async {
+    loading = true;
+    final result = await _accountRepository.logout();
+    if (result.state == ResultStatus.FAIL)
+      Toaster.error(msg: result.errorMessage);
+    else {
+      _preferencesService.user = null;
+      _preferencesService.token = null;
+      Navigator.of(context).pushReplacementNamed(AppRoute.welcomeRoute);
     }
     loading = false;
   }

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:mycarts/account/data/account_repository.dart';
 import 'package:mycarts/account/data/models/login.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/data/models/result.dart';
+import 'package:mycarts/data/models/user.dart';
 import 'package:mycarts/shared/localization/app_localization.dart';
 import 'package:mycarts/shared/services/preferences_service.dart';
 import 'package:mycarts/shared/widgets/toaster.dart';
@@ -55,19 +55,13 @@ abstract class _LoginControllerBase with Store {
   LoginModel model = LoginModel();
 
   @action
-  onCountryChange(CountryCode countryCode) {
-    model.countryCode = countryCode.toString();
-  }
-
-  @action
-  String checkPhoneNumber() {
-    if (model.phoneNumber.isEmpty) return AppLocalization.phoneNumberRequired;
-    if (model.phoneNumber.length <= 9)
-      return AppLocalization.phoneNumberNotValid;
-    else {
-      model.fullPhoneNumber = model.countryCode + model.phoneNumber;
+  String checkEmail() {
+    if (model.email.isEmpty)
+      return AppLocalization.emailRequired;
+    else if (EmailValidator.validate(model.email))
       return null;
-    }
+    else
+      return AppLocalization.emailNotValid;
   }
 
   @action
@@ -93,9 +87,9 @@ abstract class _LoginControllerBase with Store {
     else {
       final data = result.data as LoginResult;
       _preferencesService.token = data.response.token;
-      // var a = await _preferencesService.token;
+      var a = await _preferencesService.token;
       _preferencesService.user = jsonEncode(data.user);
-      // var b = User.fromJson(jsonDecode(await _preferencesService.user));
+      var b = User.fromJson(jsonDecode(await _preferencesService.user));
       Navigator.pushReplacementNamed(context, AppRoute.mainRoute);
     }
     loading = false;

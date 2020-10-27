@@ -1,4 +1,4 @@
-import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mycarts/account/login/login_controller.dart';
 import 'package:mycarts/app_route.dart';
@@ -8,7 +8,6 @@ import 'package:mycarts/shared/widgets/closable.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   LoginController _loginController = LoginController();
   final _formKey = GlobalKey<FormState>();
   String _logo = 'assets/png/app_logo.png';
-  FocusNode _phoneNumberFocusNode = FocusNode();
+  FocusNode _emailFocusNode = FocusNode();
   FocusNode _passwordFocusNode = FocusNode();
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
-    _phoneNumberFocusNode.dispose();
+    _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
   }
 
@@ -84,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Visibility(
                       visible: _loginController.loading,
-                      child: Center(child: Loader())),
+                      child: Center(child: Loader(color: AppColors.button))),
                 ])));
   }
 
@@ -107,52 +106,25 @@ class _LoginPageState extends State<LoginPage> {
                 fontWeight: FontWeight.bold)),
       ),
       SizedBox(height: 10),
-      Row(
-        children: [
-          Expanded(
-              flex: 1,
-              child: Row(children: [
-                Expanded(
-                    child: CountryCodePicker(
-                        initialSelection: 'LY',
-                        favorite: ['+963', 'SY', '+39', 'FR'],
-                        onChanged: _loginController.onCountryChange,
-                        showFlag: true,
-                        showOnlyCountryWhenClosed: false,
-                        showCountryOnly: false,
-                        flagWidth: 50,
-                        textOverflow: TextOverflow.ellipsis,
-                        hideMainText: true,
-                        closeIcon: Icon(Icons.close, color: Colors.black),
-                        searchDecoration: InputDecoration(
-                          hintText: AppLocalization.search,
-                        ))),
-                Icon(Icons.arrow_drop_down, color: Colors.black)
-              ])),
-          Expanded(
-            flex: 3,
-            child: TextFormField(
-                keyboardType: TextInputType.numberWithOptions(),
-                textInputAction: TextInputAction.next,
-                focusNode: _phoneNumberFocusNode,
-                onChanged: (value) =>
-                    _loginController.model.phoneNumber = value,
-                validator: (_) => _loginController.checkPhoneNumber(),
-                onFieldSubmitted: (_) => KeyBoard.close(context),
-                style: TextStyle(color: AppColors.black),
-                decoration: InputDecoration(
-                    labelText: AppLocalization.phoneNumber,
-                    suffixIcon: Icon(EvaIcons.phone, color: Colors.grey),
-                    fillColor: Colors.white,
-                    filled: true,
-                    labelStyle: TextStyle(color: AppColors.black),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(10),
-                    ))),
-          ),
-        ],
-      ),
+      TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.next,
+          onChanged: (value) => _loginController.model.email = value,
+          validator: (_) => _loginController.checkEmail(),
+          focusNode: _emailFocusNode,
+          onFieldSubmitted: (_) =>
+              FocusScope.of(context).requestFocus(_passwordFocusNode),
+          style: TextStyle(color: AppColors.black),
+          decoration: InputDecoration(
+              labelText: AppLocalization.email,
+              fillColor: Colors.white,
+              filled: true,
+              suffixIcon: Icon(EvaIcons.email, color: Colors.grey),
+              labelStyle: TextStyle(color: AppColors.black),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10),
+              border: OutlineInputBorder(
+                borderRadius: new BorderRadius.circular(10),
+              ))),
       SizedBox(height: 10),
       Observer(
         builder: (_) => TextFormField(
@@ -188,15 +160,13 @@ class _LoginPageState extends State<LoginPage> {
         height: 60,
         width: double.infinity,
         child: JRaisedButton(
-            onPressed: () => Navigator.pushNamed(context, AppRoute.mainRoute),
-            // onPressed: () async {
-            //   KeyBoard.close(context);
-            //   if (_formKey.currentState.validate()) {
-            //     // await _loginController.login(context);
-            //     Navigator.of(context).pushReplacementNamed(AppRoute.mainRoute);
-            //   } else
-            //     _loginController.autoValidate = true;
-            // },
+            onPressed: () async {
+              KeyBoard.close(context);
+              if (_formKey.currentState.validate()) {
+                await _loginController.login(context);
+              } else
+                _loginController.autoValidate = true;
+            },
             text: AppLocalization.login));
   }
 

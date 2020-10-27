@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mycarts/account/data/models/city.dart';
 import 'package:mycarts/account/register/register_controller.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:mycarts/app_route.dart';
@@ -44,6 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
     Future<void>.delayed(Duration(milliseconds: 1000), () async {
       await _registerController.init();
+      await _registerController.getCitys(context);
     });
   }
 
@@ -160,31 +162,30 @@ class _RegisterPageState extends State<RegisterPage> {
                               borderRadius: new BorderRadius.circular(10),
                             ))),
                     SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: Row(children: [
-                              Expanded(
-                                  child: CountryCodePicker(
-                                      initialSelection: 'LY',
-                                      favorite: ['+963', 'SY', '+39', 'FR'],
-                                      onChanged:
-                                          _registerController.onCountryChange,
-                                      showFlag: true,
-                                      showOnlyCountryWhenClosed: false,
-                                      showCountryOnly: false,
-                                      flagWidth: 50,
-                                      textOverflow: TextOverflow.ellipsis,
-                                      hideMainText: true,
-                                      closeIcon: Icon(Icons.close,
-                                          color: Colors.black),
-                                      searchDecoration: InputDecoration(
-                                        hintText: AppLocalization.search,
-                                      ))),
-                              Icon(Icons.arrow_drop_down, color: Colors.black)
-                            ])),
-                        Expanded(
+                    Row(children: [
+                      Expanded(
+                          flex: 1,
+                          child: Row(children: [
+                            Expanded(
+                                child: CountryCodePicker(
+                                    initialSelection: 'LY',
+                                    favorite: ['+963', 'SY', '+39', 'FR'],
+                                    onChanged:
+                                        _registerController.onCountryChange,
+                                    showFlag: true,
+                                    showOnlyCountryWhenClosed: false,
+                                    showCountryOnly: false,
+                                    flagWidth: 50,
+                                    textOverflow: TextOverflow.ellipsis,
+                                    hideMainText: true,
+                                    closeIcon:
+                                        Icon(Icons.close, color: Colors.black),
+                                    searchDecoration: InputDecoration(
+                                      hintText: AppLocalization.search,
+                                    ))),
+                            Icon(Icons.arrow_drop_down, color: Colors.black)
+                          ])),
+                      Expanded(
                           flex: 3,
                           child: TextFormField(
                               keyboardType: TextInputType.numberWithOptions(),
@@ -210,22 +211,18 @@ class _RegisterPageState extends State<RegisterPage> {
                                   contentPadding:
                                       EdgeInsets.symmetric(horizontal: 10),
                                   border: OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(10),
-                                  ))),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Text(AppLocalization.selectCity,
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 17)),
-                        ),
-                        Expanded(flex: 2, child: _buildCityDropDownButton())
-                      ],
-                    ),
+                                      borderRadius:
+                                          new BorderRadius.circular(10)))))
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        flex: 1,
+                        child: Text(AppLocalization.selectCity,
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 17)),
+                      ),
+                      Expanded(flex: 2, child: _buildCityDropDownButton())
+                    ]),
                     SizedBox(height: 10),
                     Row(
                       children: [
@@ -308,8 +305,8 @@ class _RegisterPageState extends State<RegisterPage> {
           onPressed: () async {
             KeyBoard.close(context);
             if (_formKey.currentState.validate()) {
-              Navigator.of(context).pushReplacementNamed(AppRoute.mainRoute);
-              // await _registerController.register(context);
+              // Navigator.of(context).pushReplacementNamed(AppRoute.mainRoute);
+              await _registerController.register(context);
             } else
               _registerController.autoValidate = true;
           },
@@ -342,24 +339,25 @@ class _RegisterPageState extends State<RegisterPage> {
 
   _buildCityDropDownButton() {
     List<DropdownMenuItem<String>> dropDownItems = [];
-    for (String city in cityList) {
+    for (City city in _registerController.cityData) {
       var newItem = DropdownMenuItem(
-          child: Text(city, overflow: TextOverflow.ellipsis), value: city);
+          child: Text(city.name, overflow: TextOverflow.ellipsis),
+          onTap: () => _registerController.model.city = city.id,
+          value: city.name);
       dropDownItems.add(newItem);
     }
     return Container(
-      decoration: BoxDecoration(
-          color: AppColors.white, borderRadius: BorderRadius.circular(5)),
-      child: DropdownButton<String>(
-          dropdownColor: Colors.white,
-          elevation: 7,
-          isExpanded: true,
-          onChanged: (selectedCity) {
-            _registerController.selectedCity(selectedCity);
-          },
-          value: _registerController.city,
-          items: dropDownItems),
-    );
+        decoration: BoxDecoration(
+            color: AppColors.white, borderRadius: BorderRadius.circular(5)),
+        child: DropdownButton<String>(
+            dropdownColor: Colors.white,
+            elevation: 7,
+            isExpanded: true,
+            onChanged: (selectedCity) {
+              _registerController.selectedCity(selectedCity);
+            },
+            value: _registerController.city,
+            items: dropDownItems));
   }
 
   _buildAccountTypeDropDownButton() {

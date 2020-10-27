@@ -9,6 +9,21 @@ part of 'register_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$RegisterController on _RegisterControllerBase, Store {
+  final _$cityDataAtom = Atom(name: '_RegisterControllerBase.cityData');
+
+  @override
+  List<City> get cityData {
+    _$cityDataAtom.reportRead();
+    return super.cityData;
+  }
+
+  @override
+  set cityData(List<City> value) {
+    _$cityDataAtom.reportWrite(value, super.cityData, () {
+      super.cityData = value;
+    });
+  }
+
   final _$loadingAtom = Atom(name: '_RegisterControllerBase.loading');
 
   @override
@@ -119,6 +134,20 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
   @override
   Future register(BuildContext context) {
     return _$registerAsyncAction.run(() => super.register(context));
+  }
+
+  final _$getCitysAsyncAction = AsyncAction('_RegisterControllerBase.getCitys');
+
+  @override
+  Future<List<City>> getCitys(BuildContext context) {
+    return _$getCitysAsyncAction.run(() => super.getCitys(context));
+  }
+
+  final _$logoutAsyncAction = AsyncAction('_RegisterControllerBase.logout');
+
+  @override
+  Future logout(BuildContext context) {
+    return _$logoutAsyncAction.run(() => super.logout(context));
   }
 
   final _$_RegisterControllerBaseActionController =
@@ -237,6 +266,7 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
   @override
   String toString() {
     return '''
+cityData: ${cityData},
 loading: ${loading},
 autoValidate: ${autoValidate},
 lang: ${lang},
