@@ -55,7 +55,9 @@ class _PaymentDetailPageState extends State<PaymentDetailPage> {
                               SizedBox(height: 25),
                               _paymentPlan(),
                               SizedBox(height: 30),
-                              _buildInputs()
+                              _buildInputs(),
+                              SizedBox(height: 10),
+                              _buildHelpText(),
                             ]),
                       ),
                     )),
@@ -258,6 +260,20 @@ class _PaymentDetailPageState extends State<PaymentDetailPage> {
                 )),
           );
         });
+  }
+
+  _buildHelpText() {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, AppRoute.messageusRoute),
+      child: Center(
+        child: Text(
+          'هل تريد الحصول على مساعدة ؟اضغط هنا',
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: AppColors.button),
+        ),
+      ),
+    );
   }
 
   _openCamera() {

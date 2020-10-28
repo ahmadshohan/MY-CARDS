@@ -56,15 +56,18 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _buildAvatar() {
-    return CircleAvatar(
-      radius: 50,
-      backgroundColor: Colors.black12,
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(100),
-          child: _controller.profileData.avatar.isEmpty
-              ? Image.asset('assets/png/avatar.png')
-              : Image.network(
-                  "${_controller.settingPath + _controller.profileData?.avatar}")),
+    return Observer(
+      builder: (_) => CircleAvatar(
+        radius: 50,
+        backgroundColor: Colors.black12,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: Image.asset('assets/png/avatar.png')
+            //     Image.network(
+            // "${_controller.settingPath + _controller.profileData?.avatar}")
+
+            ),
+      ),
     );
   }
 

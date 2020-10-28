@@ -203,6 +203,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               style: TextStyle(color: AppColors.black),
                               decoration: InputDecoration(
                                   labelText: AppLocalization.phoneNumber,
+                                  hintText: '09xxxxxxxx',
+                                  hintStyle: TextStyle(color: Colors.grey),
                                   suffixIcon:
                                       Icon(EvaIcons.phone, color: Colors.grey),
                                   fillColor: Colors.white,

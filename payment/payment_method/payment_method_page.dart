@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mycarts/app_route.dart';
 import 'package:mycarts/payment/payment_method/payment_method_controller.dart';
 import 'package:mycarts/shared/constant/payment_method.dart';
+import 'package:mycarts/shared/localization/app_localization.dart';
 import 'package:mycarts/shared/search/app_search.dart';
 import 'package:mycarts/shared/widgets/j_raised_button.dart';
 import 'package:mycarts/shared/widgets/loader.dart';
@@ -60,7 +61,9 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
                                   SizedBox(height: 5),
                                   _buildLocalBank(),
                                   _buildCash(),
-                                  _buildAdvanceCard()
+                                  _buildAdvanceCard(),
+                                  SizedBox(height: 20),
+                                  _buildHelpText()
                                 ])))),
                 Visibility(
                     visible: _controller.loading,
@@ -77,34 +80,43 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
 
   _buildLocalBank() {
     return Observer(
-      builder: (_) => Card(
-          elevation: 5,
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.18,
-            child: Center(
-              child: Theme(
-                  data: ThemeData(unselectedWidgetColor: AppColors.black),
-                  child: RadioListTile(
-                      value: PaymentMethod.LocalBank,
-                      groupValue: _controller.selectedPaymentMethod,
-                      title: ListTile(
-                        title: Row(children: [
-                          Icon(Icons.satellite, color: AppColors.black),
-                          Text(' الدفع المصرفي',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 19))
-                        ]),
-                        subtitle: Text('من خلال احد المصارف المحلية الليبية',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 15)),
-                      ),
-                      activeColor: AppColors.button,
-                      onChanged: (newValue) {
-                        _controller.setSelectedPaymentMethodType(newValue);
-                      })),
-            ),
-          )),
-    );
+        builder: (_) => Card(
+            elevation: 5,
+            child: Container(
+                height: MediaQuery.of(context).size.height * 0.18,
+                child: Center(
+                    child: Theme(
+                        data: ThemeData(unselectedWidgetColor: AppColors.black),
+                        child: RadioListTile(
+                            value: PaymentMethod.LocalBank,
+                            groupValue: _controller.selectedPaymentMethod,
+                            title: ListTile(
+                                title: Row(children: [
+                                  Icon(Icons.satellite, color: AppColors.black),
+                                  Text(' الدفع المصرفي',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 19))
+                                ]),
+                                subtitle: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          'من خلال احد المصارف المحلية الليبية',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15)),
+                                      Text(
+                                          'ملاحظة:تحتسب رسوم اضافية وقدرها 25% على اجمالي المبلغ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w300,
+                                              fontSize: 13))
+                                    ])),
+                            activeColor: AppColors.button,
+                            onChanged: (newValue) {
+                              _controller
+                                  .setSelectedPaymentMethodType(newValue);
+                            }))))));
   }
 
   _buildCash() {
@@ -168,6 +180,20 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
                       })),
             ),
           )),
+    );
+  }
+
+  _buildHelpText() {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, AppRoute.messageusRoute),
+      child: Center(
+        child: Text(
+          'هل تريد الحصول على مساعدة ؟اضغط هنا',
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: AppColors.button),
+        ),
+      ),
     );
   }
 
